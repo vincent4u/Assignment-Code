@@ -11,3 +11,15 @@ class EventHandler:
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == KEYDOWN:
+                self.KeyboardController(event)
+
+    def KeyboardController(self, event):
+        # Key Board Controller
+        if(event.key == 273):
+            print("Arrow Up")
+        if (event.key == 276):
+            print("Arrow Left")
+        if (event.key == 275):
+            print("Arrow Right")
+
