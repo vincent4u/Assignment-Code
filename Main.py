@@ -1,22 +1,28 @@
 # Main Runnable file for the CE889 Assignment
 # Project built by Lewis Veryard and Hugo Leon-Garza
+from GameLoop import GameLoop
 
-import GameLoop
-
-config_data = {}
 
 def importConfigFile():
+    keys = []
+    values = []
     file = open("Files/Config.con", 'r')
     for line in file:
         line_split = line.split(',')
-        for indervidual in line_split:
-            content = indervidual.split('=')
-            config_data[content[0]] = content[1]
+        for individual in line_split:
+            individual = individual.replace(" ", "")
+            content = individual.split('=')
+            keys.append(content[0])
+            values.append(content[1])
+    return dict(zip(keys, values))
 
-
-importConfigFile()
-print(config_data)
 
 
 def start_game_window():
-    game = GameLoop.init()
+    game = GameLoop()
+    game.init(config_data)
+    game.mainLoop()
+
+
+config_data = importConfigFile()
+start_game_window()
