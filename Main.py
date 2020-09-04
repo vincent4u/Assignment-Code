@@ -17,7 +17,6 @@ def importConfigFile():
     return dict(zip(keys, values))
 
 
-
 def start_game_window():
     game = GameLoop()
     game.init(config_data)
