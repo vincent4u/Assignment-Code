@@ -1,1 +1,2 @@
 ScreenHeight = 800 ,ScreenWidth = 400
+LANDER_IMG_PATH = Sprites/lander.png

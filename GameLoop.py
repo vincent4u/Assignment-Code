@@ -19,8 +19,8 @@ class GameLoop:
         self.screen.fill([255,255,255]) # adding white background
 
 
-    def mainLoop(self):
-        lander = Lander([0,0]) # Creates the lander object
+    def mainLoop(self, config_data):
+        lander = Lander(config_data['LANDER_IMG_PATH'], [0,0]) # Creates the lander object
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())

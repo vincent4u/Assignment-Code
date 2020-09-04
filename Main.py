@@ -20,7 +20,7 @@ def importConfigFile():
 def start_game_window():
     game = GameLoop()
     game.init(config_data)
-    game.mainLoop()
+    game.mainLoop(config_data)
 
 
 config_data = importConfigFile()
