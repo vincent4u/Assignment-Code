@@ -10,8 +10,7 @@ class EventHandler:
     def handle(self, event_list):
         for event in event_list:
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+                quit()
             if event.type == KEYDOWN:
                 self.keyboard_controller_down(event)
             if event.type == KEYUP:
@@ -19,12 +18,16 @@ class EventHandler:
 
 
     def keyboard_controller_down(self, event):
+        print(event.key)
         if event.key == 273:
             self.controller.set_up(True)
         if event.key == 276:
             self.controller.set_left(True)
         if event.key == 275:
             self.controller.set_right(True)
+        if event.key == 113:
+            self.quit();
+
 
     def keyboard_controller_up(self, event):
         if event.key == 273:
@@ -33,3 +36,8 @@ class EventHandler:
             self.controller.set_left(False)
         if event.key == 275:
             self.controller.set_right(False)
+
+
+    def quit(self):
+        pygame.quit()
+        sys.exit()
