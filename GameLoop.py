@@ -1,11 +1,14 @@
 import pygame
 from EventHandler import EventHandler
 from Lander import Lander
+from Controller import Controller
+
 
 class GameLoop:
 
     def __init__(self):
-        self.Handler = EventHandler()
+        self.Controller = Controller()
+        self.Handler = EventHandler(self.Controller)
 
 
     def init(self, config_data):
