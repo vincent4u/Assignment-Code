@@ -9,8 +9,6 @@ class GameLoop:
 
 
     def init(self, config_data):
-        print(config_data)
-
         # used to initialise the pygame library
         pygame.init()
         DISPLAYSURF = pygame.display.set_mode((int(config_data['ScreenHeight']), int(config_data['ScreenWidth'])))
@@ -19,7 +17,6 @@ class GameLoop:
 
     def mainLoop(self):
         # The main loop of the window
-        print("Main Loop start")
         while True:
             self.Handler.handle(pygame.event.get())
             # update the visuals on screen

@@ -8,6 +8,6 @@ class EventHandler:
 
     def handle(self, event_list):
         for event in event_list:
-            if event == QUIT:
+            if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
