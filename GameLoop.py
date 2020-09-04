@@ -19,5 +19,7 @@ class GameLoop:
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())
-            # update the visuals on screen
+            # update the list of things to be drawn on screen
+
+            # then update the visuals on screen from the list
             pygame.display.update()
