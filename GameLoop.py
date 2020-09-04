@@ -16,11 +16,11 @@ class GameLoop:
         pygame.init()
         self.screen = pygame.display.set_mode((int(config_data['ScreenHeight']), int(config_data['ScreenWidth'])))
         pygame.display.set_caption('CE889 Assignment Template')
-        self.screen.fill([255,255,255]) # adding white background
+        self.screen.fill([255, 255, 255]) # adding white background
 
 
     def mainLoop(self):
-        lander = Lander([0,0]) # Creates the lander object
+        lander = Lander([0, 0]) # Creates the lander object
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())
