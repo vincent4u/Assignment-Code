@@ -20,6 +20,7 @@ class Vector:
         return Vector(self.x * scalar, self.y * scalar)
 
     def rotate(self, theta):
+        theta = math.radians(theta)
         x = (self.x * math.cos(theta)) - (self.y * math.sin(theta))
         y = (self.x * math.sin(theta)) + (self.y * math.cos(theta))
         return Vector(x, y)
