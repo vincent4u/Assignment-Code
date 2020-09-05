@@ -32,6 +32,6 @@ class Vector:
         return Vector(x, y)
 
     def length(self):
-        x2 = self.x ^ 2
-        y2 = self.y ^ 2
-        return math.sqrt(x2 + y2)
+        x2 = self.x * self.x
+        y2 = self.y * self.y
+        return math.sqrt((x2 + y2))
