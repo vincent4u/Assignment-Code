@@ -1,12 +1,10 @@
 
 
 class Controller:
-    up = False
-    left = False
-    right = False
-
     def __init__(self):
-        self
+        self.up = False
+        self.left = False
+        self.right = False
 
     def set_up(self, action):
         self.up = action

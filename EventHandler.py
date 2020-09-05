@@ -18,7 +18,6 @@ class EventHandler:
 
 
     def keyboard_controller_down(self, event):
-        print(event.key)
         if event.key == 273:
             self.controller.set_up(True)
         elif event.key == 276:

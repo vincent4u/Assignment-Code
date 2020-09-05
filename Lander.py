@@ -13,21 +13,27 @@ class Lander(pygame.sprite.Sprite):
         self.position = Vector(location[0], location[1])
         self.controller = controller
         self.gravity = Vector(0, 1)
+        self.current_angle = 0
 
     def update_lander(self, delta_time):
         # update the changes in velocity
         # delta time needs to be in seconds not milliseconds
         # collect the movement information from the Controller
         movement = Vector(0, 0)
+        theta = 0.0
 
         if self.controller.is_up():
             movement = movement.add(Vector(0, -3.1)).scalar_multiply(delta_time)
 
         if self.controller.is_left():
-            movement = movement.add(Vector(-1, 0)).scalar_multiply(delta_time)
+            theta = 45 * delta_time
 
         if self.controller.is_right():
-            movement = movement.add(Vector(1, 0)).scalar_multiply(delta_time)
+            theta = -45 * delta_time
+
+        self.current_angle = self.current_angle + theta
+
+        movement = movement.rotate(self.current_angle)
 
         if self.velocity.x > 0:
             air_resistance = Vector(-0.2, 0)
