@@ -67,6 +67,6 @@ class GameLoop:
         self.game_logic.update(0.2)
 
     def setup_lander(self, config_data):
-        lander = Lander(config_data['LANDER_IMG_PATH'], [config_data['SCREEN_HEIGHT']/2,config_data['SCREEN_WIDTH']/2 ], Vector(0, 0), self.Controller)
+        lander = Lander(config_data['LANDER_IMG_PATH'], [config_data['SCREEN_WIDTH']/2, config_data['SCREEN_HEIGHT']/2], Vector(0, 0), self.Controller)
         self.game_logic.add_lander(lander)
         return lander

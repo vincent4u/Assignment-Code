@@ -22,17 +22,26 @@ class Surface(pygame.sprite.Sprite):
         # self.rect.y = start_point[1]
 
     def random_ground(self, screen_height, screen_width, spacing):
+        print("++++++++")
+        print(screen_width)
+        print(screen_height)
+        print("++++++++")
         # set out the boundaries
-        highest_point = screen_height - (screen_height / 6)
-        lowest_point = screen_height + 50
-        left_most_point = -50
-        right_most_point = screen_width + 50
+        highest_point = screen_height - (screen_width / 8)
+        lowest_point = screen_height -1
+        left_most_point = 1
+        right_most_point = screen_width -1
 
-        ans = [(right_most_point, highest_point/2),
-               (right_most_point, lowest_point),
-               (left_most_point, left_most_point),
-               (left_most_point, highest_point/2)]
 
+        print("Highest point " + str(highest_point))
+        print("Lowest point " + str(lowest_point))
+        print("left most point " + str(left_most_point))
+        print("right most point " + str(right_most_point))
+
+        #ans = [(left_most_point, highest_point)]
+
+        #ans = [(1, 840), (1919, 840), (1919, 1079), (1, 1079)]
+        ans = [(1, 100), (200,100), (200,840),(1,840)]
         number_of_points = screen_width / spacing
         i = 0
         while i < number_of_points:
@@ -40,6 +49,12 @@ class Surface(pygame.sprite.Sprite):
             rand = rand % 12
             last_y_point = ans[len(ans)-1][0]
             last_x_point = ans[len(ans)-1][1]
-            ans.append((last_y_point + rand,last_x_point + spacing))
+            #ans.append((last_y_point + rand,last_x_point + spacing))
             i = i + 1
+        #ans.append((right_most_point, highest_point))
+        #ans.append((right_most_point, lowest_point))
+        #ans.append((left_most_point, lowest_point))
+
+
+
         return ans
