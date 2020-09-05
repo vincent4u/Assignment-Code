@@ -23,8 +23,8 @@ class GameLoop:
             user32 = ctypes.windll.user32
             self.screen = pygame.display.set_mode((int(user32.GetSystemMetrics(0)), int(user32.GetSystemMetrics(1))),
                                                   pygame.FULLSCREEN)
-            config_data['SCREEN_HEIGHT'] = int(user32.GetSystemMetrics(0))
-            config_data['SCREEN_WIDTH'] = int(user32.GetSystemMetrics(1))
+            config_data['SCREEN_HEIGHT'] = int(user32.GetSystemMetrics(1))
+            config_data['SCREEN_WIDTH'] = int(user32.GetSystemMetrics(0))
         else:
             config_data['SCREEN_HEIGHT'] = int(config_data['SCREEN_HEIGHT'])
             config_data['SCREEN_WIDTH'] = int(config_data['SCREEN_WIDTH'])
