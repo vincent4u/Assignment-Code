@@ -35,3 +35,6 @@ class Vector:
         x2 = self.x * self.x
         y2 = self.y * self.y
         return math.sqrt((x2 + y2))
+
+    def print(self):
+        print("X = " + str(self.x) + " Y = " + str(self.y))
