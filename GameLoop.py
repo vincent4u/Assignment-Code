@@ -31,7 +31,7 @@ class GameLoop:
     def main_loop(self, config_data):
         # Creates the lander object
         lander = self.setup_lander(config_data)
-        surface = Surface(self.screen, (0,0), (200,200))
+        surface = Surface(self.screen, (100,100), (200,200))
         surface_sprites = pygame.sprite.Group()
         sprites = pygame.sprite.Group()
         sprites.add(lander)
@@ -43,12 +43,13 @@ class GameLoop:
             self.Handler.handle(pygame.event.get())
             # update the list of things to be drawn on screen
             self.update_objects()
-
             # painting white background
             self.screen.fill([255, 255, 255])
+
+            pygame.draw.line(self.screen, (255,0,0), (100,100), (200,200), 5)
             # then update the visuals on screen from the list
             sprites.draw(self.screen)
-            # surface_sprites.draw(self.screen)
+            surface_sprites.draw(self.screen)
             pygame.display.update()
             time.sleep(0.06)
 
