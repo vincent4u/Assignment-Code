@@ -15,6 +15,9 @@ class Lander(pygame.sprite.Sprite):
         self.gravity = Vector(0, 1)
         self.current_angle = 0
 
+    def rotate(self, angle):
+        self.image = pygame.transform.rotate(self.image, angle)
+
     def update_lander(self, delta_time):
         # update the changes in velocity
         # delta time needs to be in seconds not milliseconds
