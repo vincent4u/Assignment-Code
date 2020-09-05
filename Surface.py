@@ -13,8 +13,9 @@ class Surface(pygame.sprite.Sprite):
         self.image.set_colorkey((255,255,255))
 
         # pygame.draw.rect(self.image, (255,0,0), [0,0,200,5])
-
-        self.rect = pygame.draw.polygon(self.image, (0,0,0), [(0,0), (screen_dimension[0], 0), (screen_dimension[0], screen_dimension[1]), (0, screen_dimension[1])])        
+        polygon_surface_points = self.random_ground(screen_dimension[1], screen_dimension[0], 8)
+        # self.rect = pygame.draw.polygon(self.image, (0,0,0), [(0,0), (screen_dimension[0], 0), (screen_dimension[0], screen_dimension[1]), (0, screen_dimension[1])])        
+        self.rect = pygame.draw.polygon(self.image, (0,0,0), polygon_surface_points)        
         
         # self.rect = pygame.draw.line(screen, (255,0,0), start_point, end_point, 5)
         # self.rect.x = start_point[0]
@@ -37,8 +38,8 @@ class Surface(pygame.sprite.Sprite):
         while i < number_of_points:
             rand = random.random()
             rand = rand % 12
-            last_y_point = ans[len(ans)][0]
-            last_x_point = ans[len(ans)][1]
+            last_y_point = ans[len(ans)-1][0]
+            last_x_point = ans[len(ans)-1][1]
             ans.append((last_y_point + rand,last_x_point + spacing))
             i = i + 1
         return ans
