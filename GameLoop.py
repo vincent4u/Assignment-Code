@@ -4,6 +4,7 @@ from Lander import Lander
 from Controller import Controller
 from Vector import Vector
 from GameLogic import GameLogic
+from Surface import Surface
 
 
 class GameLoop:
@@ -30,8 +31,11 @@ class GameLoop:
     def main_loop(self, config_data):
         # Creates the lander object
         lander = self.setup_lander(config_data)
+        surface = Surface(self.screen, (0,0), (200,200))
+        surface_sprites = pygame.sprite.Group()
         sprites = pygame.sprite.Group()
         sprites.add(lander)
+        surface_sprites.add(surface)
 
 
         # The main loop of the window
@@ -44,6 +48,7 @@ class GameLoop:
             self.screen.fill([255, 255, 255])
             # then update the visuals on screen from the list
             sprites.draw(self.screen)
+            # surface_sprites.draw(self.screen)
             pygame.display.update()
             time.sleep(0.06)
 
