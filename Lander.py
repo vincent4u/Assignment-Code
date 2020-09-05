@@ -57,3 +57,4 @@ class Lander(pygame.sprite.Sprite):
         self.position = self.position.add(self.velocity)
         location = [self.position.x, self.position.y]
         self.rect.left, self.rect.top = location
+        self.rotate(self.current_angle)
