@@ -1,9 +1,8 @@
 import pygame
 from Vector import Vector
 
+
 class Lander(pygame.sprite.Sprite):
-
-
 
     def __init__(self, filepath, location, velocity, controller):
         pygame.sprite.Sprite.__init__(self)
@@ -21,21 +20,29 @@ class Lander(pygame.sprite.Sprite):
         # collect the movement information from the Controller
         movement = Vector(0, 0)
 
-
         if self.controller.is_up():
-            movement = movement.add(Vector(0, -2.1))
+            movement = movement.add(Vector(0, -3.1)).scalar_multiply(delta_time)
 
         if self.controller.is_left():
-            movement = movement.add(Vector(-1, 0))
+            movement = movement.add(Vector(-1, 0)).scalar_multiply(delta_time)
 
         if self.controller.is_right():
-            movement = movement.add(Vector(1, 0))
+            movement = movement.add(Vector(1, 0)).scalar_multiply(delta_time)
 
+        if self.velocity.x > 0:
+            air_resistance = Vector(-0.2, 0)
+        else:
+            air_resistance = Vector(0.2, 0)
 
+        last_velocity = Vector(self.velocity.x,self.velocity.y)
 
-        self.velocity = self.velocity.scalar_multiply(delta_time).add(self.gravity).add(movement)
+        air_resistance = air_resistance.scalar_multiply(delta_time)
+        gravity = self.gravity.scalar_multiply(delta_time)
+        self.velocity = self.velocity.add(air_resistance).add(gravity).add(movement)
 
-        print(str(self.velocity.x) + " " + str(self.velocity.y))
+        speed = self.velocity.length()
+        if speed > 8:
+            self.velocity = last_velocity
 
         # update the changes in position
         self.position = self.position.add(self.velocity)
