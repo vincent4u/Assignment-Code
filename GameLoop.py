@@ -19,6 +19,7 @@ class GameLoop:
         self.screen = pygame.display.set_mode((int(config_data['ScreenHeight']), int(config_data['ScreenWidth'])))
         pygame.display.set_caption('CE889 Assignment Template')
         self.screen.fill([255, 255, 255]) # adding white background
+        pygame.display.set_icon(pygame.image.load(config_data['LANDER_IMG_PATH']))
 
 
     def main_loop(self, config_data):
