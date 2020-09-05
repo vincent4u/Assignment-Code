@@ -38,9 +38,7 @@ class Lander(pygame.sprite.Sprite):
 
         self.current_angle = self.current_angle + theta
 
-
-
-        movement = movement.rotate(self.current_angle)
+        movement = movement.rotate(-self.current_angle)
 
         if self.velocity.x > 0:
             air_resistance = Vector(-0.2, 0)
@@ -51,8 +49,7 @@ class Lander(pygame.sprite.Sprite):
 
         air_resistance = air_resistance.scalar_multiply(delta_time)
         gravity = self.gravity.scalar_multiply(delta_time)
-        #self.velocity = self.velocity.add(air_resistance).add(gravity).add(movement)
-        self.velocity = self.velocity.add(movement)
+        self.velocity = self.velocity.add(air_resistance).add(gravity).add(movement)
 
         speed = self.velocity.length()
         if speed > 8:
@@ -62,6 +59,8 @@ class Lander(pygame.sprite.Sprite):
         self.velocity.print()
         print("Position: ")
         self.position.print()
+        print("Current Angle: ")
+        print(self.current_angle)
         print("================ \n")
 
         # update the changes in position
