@@ -7,6 +7,7 @@ class Lander(pygame.sprite.Sprite):
     def __init__(self, filepath, location, velocity, controller):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(filepath)
+        self.original_image = self.image
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
         self.velocity = velocity
@@ -16,11 +17,7 @@ class Lander(pygame.sprite.Sprite):
         self.current_angle = 0
 
     def rotate(self, angle):
-        location = [0, 0]
-        self.rect.left, self.rect.top = location
-        self.image = pygame.transform.rotate(self.image, angle)
-        location = [self.position.x, self.position.y]
-        self.rect.left, self.rect.top = location
+        self.image = pygame.transform.rotate(self.original_image, angle)
 
 
     def update_lander(self, delta_time):
