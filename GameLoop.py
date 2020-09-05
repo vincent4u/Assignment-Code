@@ -2,6 +2,7 @@ import pygame
 from EventHandler import EventHandler
 from Lander import Lander
 from Controller import Controller
+from Vector import Vector
 
 
 class GameLoop:
@@ -9,6 +10,7 @@ class GameLoop:
     def __init__(self):
         self.Controller = Controller()
         self.Handler = EventHandler(self.Controller)
+        self.object_list = []
 
 
     def init(self, config_data):
@@ -19,8 +21,11 @@ class GameLoop:
         self.screen.fill([255, 255, 255]) # adding white background
 
 
-    def mainLoop(self, config_data):
-        lander = Lander(config_data['LANDER_IMG_PATH'], [0,0]) # Creates the lander object
+    def main_loop(self, config_data):
+        # Creates the lander object
+        lander = Lander(config_data['LANDER_IMG_PATH'], [0,0], Vector(0, 0), Vector(0, 0))
+        self.object_list.append(lander)
+
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())
@@ -29,3 +34,7 @@ class GameLoop:
             self.screen.blit(lander.image, lander.rect)
             # then update the visuals on screen from the list
             pygame.display.update()
+
+    def update_objects(self):
+        # update the speeds and positions of the objects in game
+        self
