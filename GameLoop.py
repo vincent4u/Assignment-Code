@@ -24,14 +24,15 @@ class GameLoop:
         else:
             self.screen = pygame.display.set_mode((int(config_data['SCREEN_HEIGHT']), int(config_data['SCREEN_WIDTH'])))
         pygame.display.set_caption('CE889 Assignment Template')
-        # adding white background
-        self.screen.fill([255, 255, 255])
         pygame.display.set_icon(pygame.image.load(config_data['LANDER_IMG_PATH']))
 
 
     def main_loop(self, config_data):
         # Creates the lander object
         lander = self.setup_lander(config_data)
+        sprites = pygame.sprite.Group()
+        sprites.add(lander)
+
 
         # The main loop of the window
         while True:
@@ -39,8 +40,10 @@ class GameLoop:
             # update the list of things to be drawn on screen
             self.update_objects()
 
-            self.screen.blit(lander.image, lander.rect)
+            # painting white background
+            self.screen.fill([255, 255, 255])
             # then update the visuals on screen from the list
+            sprites.draw(self.screen)
             pygame.display.update()
             time.sleep(0.06)
 
