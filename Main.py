@@ -11,6 +11,7 @@ def importConfigFile():
         line_split = line.split(',')
         for individual in line_split:
             individual = individual.replace(" ", "")
+            individual = individual.replace("\n", "")
             content = individual.split('=')
             keys.append(content[0])
             values.append(content[1])

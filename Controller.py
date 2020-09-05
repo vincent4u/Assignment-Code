@@ -23,5 +23,5 @@ class Controller:
     def set_left(self, action):
         self.left = action
 
-    def is_left(self, action):
+    def is_left(self):
         return self.left

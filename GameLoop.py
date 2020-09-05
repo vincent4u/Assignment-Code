@@ -1,8 +1,9 @@
-import pygame
+import pygame, time
 from EventHandler import EventHandler
 from Lander import Lander
 from Controller import Controller
 from Vector import Vector
+from GameLogic import GameLogic
 
 
 class GameLoop:
@@ -11,31 +12,43 @@ class GameLoop:
         self.Controller = Controller()
         self.Handler = EventHandler(self.Controller)
         self.object_list = []
+        self.game_logic = GameLogic()
 
 
     def init(self, config_data):
         # used to initialise the pygame library
         pygame.init()
-        self.screen = pygame.display.set_mode((int(config_data['ScreenHeight']), int(config_data['ScreenWidth'])))
+        if config_data["FULLSCREEN"] == "TRUE":
+            self.screen = pygame.display.set_mode((int(config_data['SCREEN_HEIGHT']), int(config_data['SCREEN_WIDTH'])),
+                                                  pygame.FULLSCREEN)
+        else:
+            self.screen = pygame.display.set_mode((int(config_data['SCREEN_HEIGHT']), int(config_data['SCREEN_WIDTH'])))
         pygame.display.set_caption('CE889 Assignment Template')
-        self.screen.fill([255, 255, 255]) # adding white background
+        # adding white background
+        self.screen.fill([255, 255, 255])
         pygame.display.set_icon(pygame.image.load(config_data['LANDER_IMG_PATH']))
 
 
     def main_loop(self, config_data):
         # Creates the lander object
-        lander = Lander(config_data['LANDER_IMG_PATH'], [0,0], Vector(0, 0), Vector(0, 0))
-        self.object_list.append(lander)
+        lander = self.setup_lander(config_data)
 
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())
             # update the list of things to be drawn on screen
+            self.update_objects()
 
             self.screen.blit(lander.image, lander.rect)
             # then update the visuals on screen from the list
             pygame.display.update()
+            time.sleep(0.06)
 
     def update_objects(self):
         # update the speeds and positions of the objects in game
-        self
+        self.game_logic.update(0.2)
+
+    def setup_lander(self, config_data):
+        lander = Lander(config_data['LANDER_IMG_PATH'], [500, 350], Vector(-2, -2), self.Controller)
+        self.game_logic.add_lander(lander)
+        return lander
