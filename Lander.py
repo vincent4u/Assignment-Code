@@ -54,7 +54,7 @@ class Lander(pygame.sprite.Sprite):
         speed = self.velocity.length()
         if speed > 8:
             self.velocity = last_velocity
-
+        """
         print("Velocity: ")
         self.velocity.print()
         print("Position: ")
@@ -62,6 +62,7 @@ class Lander(pygame.sprite.Sprite):
         print("Current Angle: ")
         print(self.current_angle)
         print("================ \n")
+        """
 
         # update the changes in position
         self.position = self.position.add(self.velocity)
