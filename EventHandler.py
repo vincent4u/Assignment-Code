@@ -15,6 +15,10 @@ class EventHandler:
                 self.keyboard_controller_down(event)
             if event.type == KEYUP:
                 self.keyboard_controller_up(event)
+            if event.type == MOUSEBUTTONDOWN:
+                self.mouse_down()
+            if event.type == MOUSEBUTTONUP:
+                self.mouse_up()
 
 
     def keyboard_controller_down(self, event):
@@ -38,3 +42,10 @@ class EventHandler:
     def quit(self):
         pygame.quit()
         sys.exit()
+
+    def mouse_down(self):
+        self.controller.set_mouse_pos(pygame.mouse.get_pos())
+        self.controller.set_mouse(True)
+
+    def mouse_up(self):
+        self.controller.set_mouse(False)
