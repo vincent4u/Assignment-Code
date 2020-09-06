@@ -39,7 +39,7 @@ class GameLoop:
         lander = self.setup_lander(config_data)
         # surface = Surface(self.screen, (100,100), (200,200))
         print(config_data['SCREEN_WIDTH'])
-        surface = Surface((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']), (0,50))
+        surface = Surface(self.screen, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']), (0,0))
         # surface_sprites = pygame.sprite.Group()
         sprites = pygame.sprite.Group()
         sprites.add(lander)
@@ -55,6 +55,11 @@ class GameLoop:
             # painting white background
             self.screen.fill([255, 255, 255])
 
+            # ans = [(1, 840), (1900, 840), (1900, 1000), (1, 1000)]
+            # h = config_data['SCREEN_HEIGHT']
+            # w = config_data['SCREEN_WIDTH']
+            # ans = [(0, h/2), (w,h/2), (w,h),(0,h)]
+            # pygame.draw.polygon(self.screen, (0,0,0), ans)        
             # pygame.draw.line(self.screen, (255,0,0), (100,100), (200,200), 5)
             # then update the visuals on screen from the list
             sprites.draw(self.screen)
