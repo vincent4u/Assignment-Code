@@ -13,7 +13,7 @@ class Lander(pygame.sprite.Sprite):
         self.velocity = velocity
         self.position = Vector(location[0], location[1])
         self.controller = controller
-        self.gravity = Vector(0, 1)
+        self.gravity = Vector(0, 0.5)
         self.current_angle = 0
 
     def rotate(self, angle):
@@ -28,7 +28,7 @@ class Lander(pygame.sprite.Sprite):
         theta = 0.0
 
         if self.controller.is_up():
-            movement = movement.add(Vector(0, -1.6)).scalar_multiply(delta_time)
+            movement = movement.add(Vector(0, -1)).scalar_multiply(delta_time)
 
         if self.controller.is_left():
             theta = 20 * delta_time
