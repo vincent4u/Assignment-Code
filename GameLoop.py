@@ -14,7 +14,8 @@ class GameLoop:
         self.Handler = EventHandler(self.Controller)
         self.object_list = []
         self.game_logic = GameLogic()
-
+        self.fps_clock = pygame.time.Clock()
+        self.fps = 60
 
     def init(self, config_data):
         # used to initialise the pygame library
@@ -47,6 +48,7 @@ class GameLoop:
         # surface_sprites.add(surface)
 
 
+
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())
@@ -65,7 +67,7 @@ class GameLoop:
             sprites.draw(self.screen)
             # surface_sprites.draw(self.screen)
             pygame.display.update()
-            time.sleep(0.06)
+            self.fps_clock.tick(self.fps)
 
     def update_objects(self):
         # update the speeds and positions of the objects in game
