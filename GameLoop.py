@@ -1,10 +1,11 @@
-import pygame, time, ctypes
+import pygame, ctypes
 from EventHandler import EventHandler
 from Lander import Lander
 from Controller import Controller
 from Vector import Vector
 from GameLogic import GameLogic
 from Surface import Surface
+from Menu import Menu
 
 
 class GameLoop:
@@ -36,33 +37,28 @@ class GameLoop:
 
 
     def main_loop(self, config_data):
-        # Creates the lander object
-        lander = self.setup_lander(config_data)
-        # surface = Surface(self.screen, (100,100), (200,200))
-        print(config_data['SCREEN_WIDTH'])
-        surface = Surface(self.screen, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']), (0,0))
-        # surface_sprites = pygame.sprite.Group()
+        # create the group for visuals to be updated
         sprites = pygame.sprite.Group()
-        sprites.add(lander)
-        sprites.add(surface)
-        # surface_sprites.add(surface)
 
-
+        #self.menu(config_data, sprites)
+        # booleans for what the game state is
+        on_menus = False
+        game_start = True
 
         # The main loop of the window
         while True:
             self.Handler.handle(pygame.event.get())
             # update the list of things to be drawn on screen
-            self.update_objects()
             # painting white background
             self.screen.fill([255, 255, 255])
 
-            # ans = [(1, 840), (1900, 840), (1900, 1000), (1, 1000)]
-            # h = config_data['SCREEN_HEIGHT']
-            # w = config_data['SCREEN_WIDTH']
-            # ans = [(0, h/2), (w,h/2), (w,h),(0,h)]
-            # pygame.draw.polygon(self.screen, (0,0,0), ans)        
-            # pygame.draw.line(self.screen, (255,0,0), (100,100), (200,200), 5)
+            if on_menus:
+                self
+            else:
+                if game_start:
+                    self.game_start(config_data, sprites)
+                    game_start = False
+                self.update_objects()
             # then update the visuals on screen from the list
             sprites.draw(self.screen)
             # surface_sprites.draw(self.screen)
@@ -77,3 +73,14 @@ class GameLoop:
         lander = Lander(config_data['LANDER_IMG_PATH'], [config_data['SCREEN_WIDTH']/2, config_data['SCREEN_HEIGHT']/2], Vector(0, 0), self.Controller)
         self.game_logic.add_lander(lander)
         return lander
+
+    def game_start(self, config_data, sprites):
+        # Creates the lander object
+        lander = self.setup_lander(config_data)
+        surface = Surface((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+        sprites.add(lander)
+        sprites.add(surface)
+
+    def menu(self, config_data, sprites):
+        menu = Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+        sprites.add(menu)

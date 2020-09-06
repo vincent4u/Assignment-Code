@@ -2,11 +2,10 @@ import pygame, random, math
 
 class Surface(pygame.sprite.Sprite):
 
-    def __init__(self, screen, screen_dimension, location):
+    def __init__(self, screen_dimension):
         pygame.sprite.Sprite.__init__(self)
         # create the points for the polygon
         landing_pad_points = self.build_landing_pad(100, screen_dimension[1] * 0.1, screen_dimension[0], screen_dimension[1])
-        print(landing_pad_points)
         polygon_surface_points = self.random_ground(screen_dimension[1], screen_dimension[0], 20, 50, landing_pad_points)
         # create the canvas where the polygon will be painted, make it 
         self.image = pygame.Surface([screen_dimension[0], screen_dimension[1]])
