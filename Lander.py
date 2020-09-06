@@ -20,7 +20,7 @@ class Lander(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.original_image, angle)
 
 
-    def update_lander(self, delta_time, screen_size):
+    def update_lander(self, delta_time):
         # update the changes in velocity
         # delta time needs to be in seconds not milliseconds
         # collect the movement information from the Controller

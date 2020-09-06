@@ -5,7 +5,7 @@ class Surface(pygame.sprite.Sprite):
     def __init__(self, screen, screen_dimension, location):
         pygame.sprite.Sprite.__init__(self)
         # create the points for the polygon 
-        polygon_surface_points = self.random_ground(screen_dimension[1], screen_dimension[0], 20, 25)
+        polygon_surface_points = self.random_ground(screen_dimension[1], screen_dimension[0], 20, 100)
         # create the canvas where the polygon will be painted, make it 
         self.image = pygame.Surface([screen_dimension[0], screen_dimension[1]])
         self.image.fill((255,255,255))
@@ -16,9 +16,6 @@ class Surface(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def random_ground(self, screen_height, screen_width, spacing, varation):
-        screen_height = screen_height
-        screen_width = screen_width
-
         # set out the boundaries
         highest_point = screen_height - (screen_height / 8)
         lowest_point = screen_height + screen_height
