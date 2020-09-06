@@ -23,11 +23,10 @@ class GameLoop:
         pygame.init()
         if config_data["FULLSCREEN"] == "TRUE":
             user32 = ctypes.windll.user32
-            # self.screen = pygame.display.set_mode((int(user32.GetSystemMetrics(0)), int(user32.GetSystemMetrics(1))),
-                                                #   pygame.FULLSCREEN)
             config_data['SCREEN_HEIGHT'] = int(user32.GetSystemMetrics(1))
             config_data['SCREEN_WIDTH'] = int(user32.GetSystemMetrics(0))
-            self.screen = pygame.display.set_mode((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']),
+                                                  pygame.FULLSCREEN)
         else:
             config_data['SCREEN_HEIGHT'] = int(config_data['SCREEN_HEIGHT'])
             config_data['SCREEN_WIDTH'] = int(config_data['SCREEN_WIDTH'])
@@ -35,15 +34,16 @@ class GameLoop:
         pygame.display.set_caption('CE889 Assignment Template')
         pygame.display.set_icon(pygame.image.load(config_data['LANDER_IMG_PATH']))
 
-
     def main_loop(self, config_data):
         # create the group for visuals to be updated
         sprites = pygame.sprite.Group()
 
-        #self.menu(config_data, sprites)
         # booleans for what the game state is
         on_menus = False
         game_start = True
+
+        if on_menus:
+            self.menu(config_data, sprites)
 
         # The main loop of the window
         while True:
@@ -70,7 +70,9 @@ class GameLoop:
         self.game_logic.update(0.2)
 
     def setup_lander(self, config_data):
-        lander = Lander(config_data['LANDER_IMG_PATH'], [config_data['SCREEN_WIDTH']/2, config_data['SCREEN_HEIGHT']/2], Vector(0, 0), self.Controller)
+        lander = Lander(config_data['LANDER_IMG_PATH'],
+                        [config_data['SCREEN_WIDTH'] / 2, config_data['SCREEN_HEIGHT'] / 2], Vector(0, 0),
+                        self.Controller)
         self.game_logic.add_lander(lander)
         return lander
 
@@ -82,5 +84,6 @@ class GameLoop:
         sprites.add(surface)
 
     def menu(self, config_data, sprites):
-        menu = Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
-        sprites.add(menu)
+        Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+        #print(h)
+        #sprites.add(h)
