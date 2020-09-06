@@ -4,7 +4,6 @@ import pygame
 class Menu(pygame.sprite.Sprite):
 
     def __int__(self, screen_dimension):
-        print("Menu open")
         pygame.sprite.Sprite.__init__(self)
         # create the points for the buttons
 

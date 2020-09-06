@@ -84,6 +84,6 @@ class GameLoop:
         sprites.add(surface)
 
     def menu(self, config_data, sprites):
-        Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
-        #print(h)
-        #sprites.add(h)
+        print(config_data)
+        menu = Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+        sprites.add(menu)
