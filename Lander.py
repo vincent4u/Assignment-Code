@@ -1,5 +1,6 @@
 import pygame
 from Vector import Vector
+from CollisionUtility import CollisionUtility
 
 
 class Lander(pygame.sprite.Sprite):
@@ -18,6 +19,11 @@ class Lander(pygame.sprite.Sprite):
 
     def rotate(self, angle):
         self.image = pygame.transform.rotate(self.original_image, angle)
+
+    def surface_collision(self, surface):
+        if (self.rect.colliderect(surface.polygon_rect)):
+            collided = CollisionUtility.check_lander_collision_with_surface(self, surface)
+            return collided
 
 
     def update_lander(self, delta_time):
@@ -73,4 +79,3 @@ class Lander(pygame.sprite.Sprite):
     def check_boundary(self, screen_size):
         screen_width = screen_size[0]
         screen_height = screen_size[1]
-

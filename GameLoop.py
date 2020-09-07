@@ -1,4 +1,4 @@
-import pygame, time, ctypes
+import pygame, time, ctypes, sys
 from EventHandler import EventHandler
 from Lander import Lander
 from Controller import Controller
@@ -56,6 +56,11 @@ class GameLoop:
             self.update_objects()
             # painting white background
             self.screen.fill([255, 255, 255])
+
+            # check if lander collided with surface
+            if (lander.surface_collision(surface)):
+                pygame.quit()
+                sys.exit()
 
             # ans = [(1, 840), (1900, 840), (1900, 1000), (1, 1000)]
             # h = config_data['SCREEN_HEIGHT']
