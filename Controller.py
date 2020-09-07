@@ -29,6 +29,10 @@ class Controller:
     def set_mouse_event(self, pos):
         self.mouse_pos = pos
 
+    def set_mouse_pos(self, pos):
+        self.mouse_pos = pos
+        print(pos)
+
     def get_mouse_pos(self):
         return self.mouse_pos
 

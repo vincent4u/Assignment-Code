@@ -19,7 +19,7 @@ class Surface(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
 
-    def random_ground(self, screen_height, screen_width, spacing, varation, landing_pad):
+    def random_ground(self, screen_height, screen_width, spacing, variation, landing_pad):
         # set out the boundaries
         highest_point = screen_height - (screen_height / 8)
         lowest_point = screen_height + 10
@@ -31,7 +31,7 @@ class Surface(pygame.sprite.Sprite):
 
         while i < number_of_points:
             rand = random.random()
-            rand = rand * varation
+            rand = rand * variation
             last_x_point = ans[i][0]
             if last_x_point > landing_pad[0][0] and last_x_point < landing_pad[1][0]:
                 ans[-1] = ans[-2]

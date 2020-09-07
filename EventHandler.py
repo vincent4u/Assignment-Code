@@ -20,7 +20,6 @@ class EventHandler:
             if event.type == MOUSEBUTTONUP:
                 self.mouse_up()
 
-
     def keyboard_controller_down(self, event):
         if event.key == 273:
             self.controller.set_up(True)

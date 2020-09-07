@@ -34,6 +34,8 @@ class GameLoop:
         pygame.display.set_caption('CE889 Assignment Template')
         pygame.display.set_icon(pygame.image.load(config_data['LANDER_IMG_PATH']))
 
+
+
     def main_loop(self, config_data):
         # create the group for visuals to be updated
         sprites = pygame.sprite.Group()
@@ -42,20 +44,29 @@ class GameLoop:
         on_menus = False
         game_start = True
 
+
         if on_menus:
             self.menu(config_data, sprites)
-
         # The main loop of the window
+        image = pygame.image.load(config_data['BACKGROUND_IMG_PATH'])
+
+        pygame.font.init()  # you have to call this at the start,
+        # if you want to use this module.
+        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+
+
         while True:
             self.Handler.handle(pygame.event.get())
             # update the list of things to be drawn on screen
             # painting white background
-            self.screen.fill([255, 255, 255])
+            #self.screen.fill([0, 255, 255])
+            self.screen.blit(image,(0,0))
 
             if on_menus:
                 self
             else:
                 if game_start:
+                    sprites = pygame.sprite.Group()
                     self.game_start(config_data, sprites)
                     game_start = False
                 self.update_objects()
@@ -66,7 +77,12 @@ class GameLoop:
             # then update the visuals on screen from the list
             sprites.draw(self.screen)
             # surface_sprites.draw(self.screen)
-            pygame.display.update()
+            Fps_count = str(self.fps_clock)
+            FpsText = "FPS: " + Fps_count
+            textsurface = myfont.render(FpsText, False, (255, 255, 255))
+            self.screen.blit(textsurface, (0, 0))
+            for drawable in sprites:
+                pygame.display.update(drawable)
             self.fps_clock.tick(self.fps)
 
     def update_objects(self):
