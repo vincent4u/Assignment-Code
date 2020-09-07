@@ -48,7 +48,8 @@ class GameLoop:
         if on_menus:
             self.menu(config_data, sprites)
         # The main loop of the window
-        image = pygame.image.load(config_data['BACKGROUND_IMG_PATH'])
+        background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH'])
+        background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
         pygame.font.init()  # you have to call this at the start,
         # if you want to use this module.
@@ -60,7 +61,7 @@ class GameLoop:
             # update the list of things to be drawn on screen
             # painting white background
             #self.screen.fill([0, 255, 255])
-            self.screen.blit(image,(0,0))
+            self.screen.blit(background_image,(0,0))
 
             if on_menus:
                 self
@@ -81,8 +82,7 @@ class GameLoop:
             FpsText = "FPS: " + Fps_count
             textsurface = myfont.render(FpsText, False, (255, 255, 255))
             self.screen.blit(textsurface, (0, 0))
-            for drawable in sprites:
-                pygame.display.update(drawable)
+            pygame.display.flip()
             self.fps_clock.tick(self.fps)
 
     def update_objects(self):
