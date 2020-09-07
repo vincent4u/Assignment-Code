@@ -9,14 +9,23 @@ class CollisionUtility:
     @staticmethod
     def check_lander_collision_with_surface(lander, surface):
         lander_bottom_line = [lander.rect.bottomleft, lander.rect.bottomright]
+        lander_top_line = [lander.rect.topleft, lander.rect.topright]
         surface_points = CollisionUtility.surface_points_below_lander(lander, surface)
 
         intersection_point_found = False
 
         for i in range(len(surface_points)-1):
-            intersect_point = CollisionUtility.calculateIntersectPoint(lander_bottom_line[0], lander_bottom_line[1], surface_points[i], surface_points[i+1])
-            if (intersect_point != None):
+            top_intersect_point = CollisionUtility.calculateIntersectPoint(lander_top_line[0], lander_top_line[1], surface_points[i], surface_points[i+1])
+            bottom_intersect_point = CollisionUtility.calculateIntersectPoint(lander_bottom_line[0], lander_bottom_line[1], surface_points[i], surface_points[i+1])
+            if (bottom_intersect_point != None or top_intersect_point != None):
                 intersection_point_found = True
+
+        if (not intersection_point_found):
+            lowest_lander_point = max(lander_bottom_line[0][1], lander_bottom_line[1][1], lander_top_line[0][1], lander_top_line[1][1])
+            lowest_surface_point = 0
+            for p in surface_points:
+                lowest_surface_point = max(lowest_surface_point, p[1])
+            intersection_point_found = (lowest_surface_point < lowest_lander_point)
 
         return intersection_point_found
 

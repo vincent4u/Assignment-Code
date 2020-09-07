@@ -22,6 +22,7 @@ class Lander(pygame.sprite.Sprite):
 
     def surface_collision(self, surface):
         if (self.rect.colliderect(surface.polygon_rect)):
+            print("POSSIBLE COLLISION")
             collided = CollisionUtility.check_lander_collision_with_surface(self, surface)
             return collided
 
