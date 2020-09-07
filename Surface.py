@@ -1,24 +1,28 @@
 import pygame, random, math
 
+
 class Surface(pygame.sprite.Sprite):
 
-    def __init__(self, screen, screen_dimension, location):
+    def __init__(self, screen_dimension):
         pygame.sprite.Sprite.__init__(self)
-        # create the points for the polygon 
-        self.polygon_points = self.random_ground(screen_dimension[1], screen_dimension[0], 20, 100)
+        # create the points for the polygon
+        landing_pad_points = self.build_landing_pad(100, screen_dimension[1] * 0.1, screen_dimension[0],
+                                                    screen_dimension[1])
+        self.polygon_points = self.random_ground(screen_dimension[1], screen_dimension[0], 20, 50,
+                                                    landing_pad_points)
         # create the canvas where the polygon will be painted, make it 
         self.image = pygame.Surface([screen_dimension[0], screen_dimension[1]])
-        self.image.fill((255,255,255))
-        self.image.set_colorkey((255,255,255))
+        self.image.fill((255, 255, 255))
+        self.image.set_colorkey((255, 255, 255))
         # create the polygon using the random points
         self.polygon_rect = pygame.draw.polygon(self.image, (0,0,0), self.polygon_points)        
 
         self.rect = self.image.get_rect()
 
-    def random_ground(self, screen_height, screen_width, spacing, varation):
+    def random_ground(self, screen_height, screen_width, spacing, varation, landing_pad):
         # set out the boundaries
         highest_point = screen_height - (screen_height / 8)
-        lowest_point = screen_height + screen_height
+        lowest_point = screen_height + 10
         left_most_point = 0
         right_most_point = screen_width + 1
         ans = [(left_most_point, highest_point)]
@@ -28,12 +32,27 @@ class Surface(pygame.sprite.Sprite):
         while i < number_of_points:
             rand = random.random()
             rand = rand * varation
-            last_y_point = ans[i][1]
             last_x_point = ans[i][0]
-            ans.append((last_x_point + spacing, highest_point + rand))
+            if last_x_point > landing_pad[0][0] and last_x_point < landing_pad[1][0]:
+                ans[-1] = ans[-2]
+                ans.append(landing_pad[0])
+                ans.append(landing_pad[1])
+                i = i + 2
+                continue
+            next_y_point = highest_point - rand
+            ans.append((last_x_point + spacing, + next_y_point))
             i = i + 1
 
         ans.append((right_most_point, highest_point))
         ans.append((right_most_point, lowest_point))
         ans.append((left_most_point, lowest_point))
         return ans
+
+    def build_landing_pad(self, width, height, screen_width, screen_height):
+        # width in pixels
+        buffer = screen_width * 0.05
+        max = screen_width - buffer - width
+        min = buffer
+        rand = random.random()
+        starting_point = max - (rand * (max - min))
+        return [(starting_point, screen_height - height), (starting_point + width, screen_height - height)]
