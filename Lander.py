@@ -9,6 +9,7 @@ class Lander(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(filepath)
         self.original_image = self.image
+        self.image = pygame.transform.scale(self.image, (1, 1))
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
         self.velocity = velocity
