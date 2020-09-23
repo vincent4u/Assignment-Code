@@ -1,4 +1,4 @@
 SCREEN_HEIGHT = 600 ,SCREEN_WIDTH = 400
-LANDER_IMG_PATH = Sprites/lander.png
+LANDER_IMG_PATH = Sprites/golden_lander.png
 BACKGROUND_IMG_PATH = Sprites/BackGround.png
 FULLSCREEN = TRUE
