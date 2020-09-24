@@ -12,10 +12,10 @@ class Surface(pygame.sprite.Sprite):
                                                     landing_pad_points)
         # create the canvas where the polygon will be painted, make it 
         self.image = pygame.Surface([screen_dimension[0], screen_dimension[1]])
-        self.image.fill((255, 255, 255))
+        self.image.fill((255,255,255))
         self.image.set_colorkey((255, 255, 255))
         # create the polygon using the random points
-        self.polygon_rect = pygame.draw.polygon(self.image, (0,0,0), self.polygon_points)        
+        self.polygon_rect = pygame.draw.polygon(self.image, (192,192,192), self.polygon_points)        
 
         self.rect = self.image.get_rect()
 
