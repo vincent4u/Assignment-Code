@@ -45,14 +45,14 @@ class GameLoop:
         sprites = pygame.sprite.Group()
 
         # booleans for what the game state is
-        on_menus = True
-        game_start = False
+        on_menus = False
+        game_start = True
 
         # Game modes: Play Game, Data Collection, Neural Net
         game_modes = [False, False, False]
         
         # The main loop of the window
-        background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH'])
+        background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH']).convert_alpha()
         background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
         main_menu = Menu()
