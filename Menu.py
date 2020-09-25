@@ -1,21 +1,25 @@
 import pygame
 
 
-class Menu(pygame.sprite.Sprite):
+class Menu():
 
-    def __int__(self, screen_dimension):
-        pygame.sprite.Sprite.__init__(self)
-        # create the points for the buttons
-        self.button = self.create_button()
+    def __int__(self):
 
-        # create the canvas where the polygon will be painted, make it
-        self.image = pygame.Surface([screen_dimension[0], screen_dimension[1]])
-        self.image.fill((255, 255, 255))
-        self.image.set_colorkey((255, 255, 255))
-        # create the buttons using the points
-        self.polygon_rect = pygame.draw.polygon(self.image, (0, 0, 0), self.button)
+        WHITE = (255,255,255)
+        BLACK = (0,0,0)
+        GRAY = (128,128,128)
 
-        self.rect = self.image.get_rect()
 
-    def create_button(self, height, width, x, y):
-        return [(0, 110), (0, 500), (500, 120)]
+    def draw_buttons(self, screen):
+        top_left = (300, 200)
+        FONT = pygame.font.SysFont("Times New Norman", 60)
+        text_buttons = [FONT.render("Play Game", True, (255,255,255)), "Data Collection", "Quit"]
+        rect_buttons = [(top_left[0], top_left[1], 200, 80),(top_left[0], top_left[1]+100, 200, 80), (top_left[0], top_left[1]+200, 200, 80)]
+        
+        buttons = [
+            [text_buttons[0], rect_buttons[0], (0,0,0)],
+        ]
+        screen.fill((255,255,255))
+        for text, rect, color in buttons:
+            pygame.draw.rect(screen, color, rect)
+            screen.blit(text, rect)

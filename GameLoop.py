@@ -37,34 +37,43 @@ class GameLoop:
 
 
     def main_loop(self, config_data):
+        pygame.font.init()  # you have to call this at the start,
+        # if you want to use this module you need to call pygame.font.init()
+        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        
         # create the group for visuals to be updated
         sprites = pygame.sprite.Group()
 
         # booleans for what the game state is
-        on_menus = False
-        game_start = True
+        on_menus = True
+        game_start = False
 
-
-        if on_menus:
-            self.menu(config_data, sprites)
+        # Game modes: Play Game, Data Collection, Neural Net
+        game_modes = [False, False, False]
+        
         # The main loop of the window
         background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH'])
         background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
-        pygame.font.init()  # you have to call this at the start,
-        # if you want to use this module.
-        myfont = pygame.font.SysFont('Comic Sans MS', 30)
-
-
+        main_menu = Menu()
+        # Initialize 
         while True:
             self.Handler.handle(pygame.event.get())
             # update the list of things to be drawn on screen
             # painting white background
-            #self.screen.fill([0, 255, 255])
+            # self.screen.fill([0, 255, 255])
             self.screen.blit(background_image,(0,0))
 
             if on_menus:
-                self
+                main_menu.draw_buttons(self.screen)
+                for event in pygame.event.get():
+                    # mouse button was clicked
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        # 1 == left mouse button, 2 == middle button, 3 == right button
+                        if event.button == 1:
+                            # 'event.pos' is the mouse position
+                            pygame.quit()
+                            sys.exit()
             else:
                 if game_start:
                     sprites = pygame.sprite.Group()
@@ -102,8 +111,3 @@ class GameLoop:
         self.surface = Surface((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         sprites.add(self.lander)
         sprites.add(self.surface)
-
-    def menu(self, config_data, sprites):
-        print(config_data)
-        menu = Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
-        sprites.add(menu)
