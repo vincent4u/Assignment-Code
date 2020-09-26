@@ -45,8 +45,8 @@ class GameLoop:
         sprites = pygame.sprite.Group()
 
         # booleans for what the game state is
-        on_menus = False
-        game_start = True
+        on_menus = True
+        game_start = False
 
         # Game modes: Play Game, Data Collection, Neural Net
         game_modes = [False, False, False]
@@ -65,7 +65,8 @@ class GameLoop:
             self.screen.blit(background_image,(0,0))
 
             if on_menus:
-                main_menu.draw_buttons(self.screen)
+                main_menu.draw_buttons2(self.screen, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+                # main_menu.draw_buttons(self.screen)
                 for event in pygame.event.get():
                     # mouse button was clicked
                     if event.type == pygame.MOUSEBUTTONDOWN:

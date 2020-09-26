@@ -1,13 +1,12 @@
 import pygame
 
-
-class Menu():
+class Menu:
 
     def __int__(self):
 
-        WHITE = (255,255,255)
-        BLACK = (0,0,0)
-        GRAY = (128,128,128)
+        self.WHITE = (255,255,255)
+        self.BLACK = (0,0,0)
+        self.GRAY = (128,128,128)
 
 
     def draw_buttons(self, screen):
