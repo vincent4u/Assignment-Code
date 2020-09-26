@@ -103,6 +103,8 @@ class GameLoop:
                 if (self.lander.surface_collision(self.surface)):
                     on_menus = True
                     game_start = False
+                    for i in range(len(game_modes)):
+                        game_modes[i] = False
 
             # surface_sprites.draw(self.screen)
             Fps_count = str(self.fps_clock)
