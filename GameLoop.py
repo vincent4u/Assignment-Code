@@ -49,15 +49,26 @@ class GameLoop:
         game_start = False
 
         # Game modes: Play Game, Data Collection, Neural Net
-        game_modes = [False, False, False]
+        game_modes = [False, False, False, False]
         
         # The main loop of the window
         background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH']).convert_alpha()
         background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
-        main_menu = Menu()
+        main_menu = Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         # Initialize 
         while True:
+            # check if Quit button was clicked
+            if (game_modes[len(game_modes)-1]):
+                pygame.quit()
+                sys.exit()
+
+            # if game is started, initialize all objects
+            if game_start:
+                sprites = pygame.sprite.Group()
+                self.game_start(config_data, sprites)
+                game_start = False
+
             self.Handler.handle(pygame.event.get())
             # update the list of things to be drawn on screen
             # painting white background
@@ -73,20 +84,26 @@ class GameLoop:
                         # 1 == left mouse button, 2 == middle button, 3 == right button
                         if event.button == 1:
                             # 'event.pos' is the mouse position
-                            pygame.quit()
-                            sys.exit()
+                            for i in range(len(main_menu.buttons)):
+                                if (main_menu.buttons[i][1].collidepoint(event.pos)):
+                                    game_modes[i] = True
+                                    on_menus = False
+                                    game_start = True
+                    elif event.type == pygame.MOUSEMOTION:
+                        for i in range(len(main_menu.buttons)):
+                            if (main_menu.buttons[i][1].collidepoint(event.pos)):
+                                main_menu.onHover(i)
+                            else:
+                                main_menu.offHover(i)
             else:
-                if game_start:
-                    sprites = pygame.sprite.Group()
-                    self.game_start(config_data, sprites)
-                    game_start = False
                 self.update_objects()
+                # then update the visuals on screen from the list
+                sprites.draw(self.screen)
                 # check if lander collided with surface
                 if (self.lander.surface_collision(self.surface)):
-                    pygame.quit()
-                    sys.exit()
-            # then update the visuals on screen from the list
-            sprites.draw(self.screen)
+                    on_menus = True
+                    game_start = False
+
             # surface_sprites.draw(self.screen)
             Fps_count = str(self.fps_clock)
             FpsText = "FPS: " + Fps_count
