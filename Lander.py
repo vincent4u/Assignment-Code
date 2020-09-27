@@ -21,6 +21,9 @@ class Lander(pygame.sprite.Sprite):
     def rotate(self, angle):
         self.image = pygame.transform.rotate(self.original_image, angle)
 
+    def landing_pad_collision(self, surface):
+        return self.rect.colliderect(surface.landing_pad)
+            
     def surface_collision(self, surface):
         if (self.rect.colliderect(surface.polygon_rect)):
             print("POSSIBLE COLLISION")

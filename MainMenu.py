@@ -1,6 +1,6 @@
 import pygame
 
-class Menu:
+class MainMenu:
 
 
     def __init__(self, screen_dimension):
@@ -35,3 +35,21 @@ class Menu:
     
     def offHover(self, num_button):
         self.buttons[num_button][2] = self.colors[0]
+
+    def check_hover(self, event):
+        if event.type == pygame.MOUSEMOTION:
+            for button in self.buttons:
+                if (button[1].collidepoint(event.pos)):
+                    button[2] = self.colors[1]
+                else:
+                    button[2] = self.colors[0]
+
+    def check_button_click(self, event):
+        # mouse button was clicked
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # 1 == left mouse button, 2 == middle button, 3 == right button
+            if event.button == 1:
+                for i, button in enumerate(self.buttons):
+                    if (button[1].collidepoint(event.pos)):
+                        return i
+        return -1

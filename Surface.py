@@ -17,6 +17,9 @@ class Surface(pygame.sprite.Sprite):
         # create the polygon using the random points
         self.polygon_rect = pygame.draw.polygon(self.image, (192,192,192), self.polygon_points)        
 
+        landing_pad_rect = self.get_landing_platform_rect(landing_pad_points, 20)
+        self.landing_pad = pygame.draw.rect(self.image, (0, 255, 0), landing_pad_rect)
+
         self.rect = self.image.get_rect()
 
     def random_ground(self, screen_height, screen_width, spacing, variation, landing_pad):
@@ -56,3 +59,10 @@ class Surface(pygame.sprite.Sprite):
         rand = random.random()
         starting_point = max - (rand * (max - min))
         return [(starting_point, screen_height - height), (starting_point + width, screen_height - height)]
+
+    def get_landing_platform_rect(self, landing_pad_points, height):
+        x = landing_pad_points[0][0]
+        y = landing_pad_points[0][1] - height/2
+        width = landing_pad_points[1][0]-landing_pad_points[0][0]
+
+        return pygame.Rect(x,y,width,height)

@@ -5,7 +5,8 @@ from Controller import Controller
 from Vector import Vector
 from GameLogic import GameLogic
 from Surface import Surface
-from Menu import Menu
+from MainMenu import MainMenu
+from ResultMenu import ResultMenu
 
 
 class GameLoop:
@@ -45,17 +46,18 @@ class GameLoop:
         sprites = pygame.sprite.Group()
 
         # booleans for what the game state is
-        on_menus = True
+        on_menus = [True, False, False] #Main, Won, Lost
         game_start = False
 
-        # Game modes: Play Game, Data Collection, Neural Net
+        # Game modes: Play Game, Data Collection, Neural Net, Quit
         game_modes = [False, False, False, False]
         
         # The main loop of the window
         background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH']).convert_alpha()
         background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
-        main_menu = Menu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+        main_menu = MainMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
+        result_menu = ResultMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         # Initialize 
         while True:
             # check if Quit button was clicked
@@ -69,42 +71,47 @@ class GameLoop:
                 self.game_start(config_data, sprites)
                 game_start = False
 
-            self.Handler.handle(pygame.event.get())
-            # update the list of things to be drawn on screen
-            # painting white background
-            # self.screen.fill([0, 255, 255])
-            self.screen.blit(background_image,(0,0))
+            if on_menus[0] or on_menus[1] or on_menus[2]:
+                if on_menus[1] or on_menus[2]:
+                    result_menu.draw_result_objects(self.screen, on_menus[1])
+                else:
+                    main_menu.draw_buttons(self.screen)
 
-            if on_menus:
-                main_menu.draw_buttons(self.screen)
                 # main_menu.draw_buttons(self.screen)
                 for event in pygame.event.get():
-                    # mouse button was clicked
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        # 1 == left mouse button, 2 == middle button, 3 == right button
-                        if event.button == 1:
-                            # 'event.pos' is the mouse position
-                            for i in range(len(main_menu.buttons)):
-                                if (main_menu.buttons[i][1].collidepoint(event.pos)):
-                                    game_modes[i] = True
-                                    on_menus = False
-                                    game_start = True
-                    elif event.type == pygame.MOUSEMOTION:
-                        for i in range(len(main_menu.buttons)):
-                            if (main_menu.buttons[i][1].collidepoint(event.pos)):
-                                main_menu.onHover(i)
-                            else:
-                                main_menu.offHover(i)
+                    if on_menus[0]:
+                        main_menu.check_hover(event)
+                        button_clicked = main_menu.check_button_click(event)
+                        main_menu.draw_buttons(self.screen)
+                        if button_clicked > -1:
+                            game_modes[button_clicked] = True
+                            on_menus[0] = False
+                            game_start = True
+                    
+                    elif on_menus[1] or on_menus[2]:
+                        result_menu.check_hover(event)
+                        on_menus[0] = result_menu.check_back_main_menu(event)
+                        result_menu.draw_result_objects(self.screen, on_menus[1])
+                        if on_menus[0]:
+                            on_menus[1] = False
+                            on_menus[2] = False
             else:
+                self.Handler.handle(pygame.event.get())
+                self.screen.blit(background_image,(0,0))
                 self.update_objects()
                 # then update the visuals on screen from the list
                 sprites.draw(self.screen)
+                if (self.lander.landing_pad_collision(self.surface)):
+                    on_menus[1] = True
                 # check if lander collided with surface
-                if (self.lander.surface_collision(self.surface)):
-                    on_menus = True
+                elif (self.lander.surface_collision(self.surface)):
+                    on_menus[2] = True
+                
+                if (on_menus[1] or on_menus[2]):
                     game_start = False
                     for i in range(len(game_modes)):
                         game_modes[i] = False
+
 
             # surface_sprites.draw(self.screen)
             Fps_count = str(self.fps_clock)
