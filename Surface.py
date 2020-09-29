@@ -19,7 +19,7 @@ class Surface(pygame.sprite.Sprite):
 
         landing_pad_rect = self.get_landing_platform_rect(landing_pad_points, 20)
         self.landing_pad = pygame.draw.rect(self.image, (0, 255, 0), landing_pad_rect)
-
+        self.centre_landing_pad = ((landing_pad_points[0][0]+landing_pad_points[1][0])/2,(landing_pad_points[0][1]+landing_pad_points[1][1])/2)
         self.rect = self.image.get_rect()
 
     def random_ground(self, screen_height, screen_width, spacing, variation, landing_pad):

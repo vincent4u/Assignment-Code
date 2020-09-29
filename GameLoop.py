@@ -7,13 +7,13 @@ from GameLogic import GameLogic
 from Surface import Surface
 from MainMenu import MainMenu
 from ResultMenu import ResultMenu
-
+from DataCollection import DataCollection
 
 class GameLoop:
 
     def __init__(self):
-        self.Controller = Controller()
-        self.Handler = EventHandler(self.Controller)
+        self.controller = Controller()
+        self.Handler = EventHandler(self.controller)
         self.object_list = []
         self.game_logic = GameLogic()
         self.fps_clock = pygame.time.Clock()
@@ -56,6 +56,7 @@ class GameLoop:
         background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH']).convert_alpha()
         background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
+        data_collector = DataCollection()
         main_menu = MainMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         result_menu = ResultMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         # Initialize 
@@ -97,6 +98,9 @@ class GameLoop:
                             on_menus[2] = False
             else:
                 self.Handler.handle(pygame.event.get())
+                # check if data collection mode is activated
+                if (game_modes[1]):
+                    data_collector.save_current_status(self.lander, self.surface, self.controller)
                 self.screen.blit(background_image,(0,0))
                 self.update_objects()
                 # then update the visuals on screen from the list
@@ -128,7 +132,7 @@ class GameLoop:
     def setup_lander(self, config_data):
         lander = Lander(config_data['LANDER_IMG_PATH'],
                         [config_data['SCREEN_WIDTH'] / 2, config_data['SCREEN_HEIGHT'] / 2], Vector(0, 0),
-                        self.Controller)
+                        self.controller)
         self.game_logic.add_lander(lander)
         return lander
 
