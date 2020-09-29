@@ -68,6 +68,8 @@ class GameLoop:
 
             # if game is started, initialize all objects
             if game_start:
+                self.controller = Controller()
+                self.Handler = EventHandler(self.controller)
                 sprites = pygame.sprite.Group()
                 self.game_start(config_data, sprites)
                 game_start = False
