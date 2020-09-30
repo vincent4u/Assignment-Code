@@ -10,14 +10,20 @@ class CollisionUtility:
     def check_lander_collision_with_surface(lander, surface):
         lander_bottom_line = [lander.rect.bottomleft, lander.rect.bottomright]
         lander_top_line = [lander.rect.topleft, lander.rect.topright]
+        lander_left_line = [lander.rect.topleft, lander.rect.bottomleft]
+        lander_right_line = [lander.rect.topright, lander.rect.bottomright]
         surface_points = CollisionUtility.surface_points_below_lander(lander, surface)
 
         intersection_point_found = False
-
+        print("surface points: ", surface_points)
         for i in range(len(surface_points)-1):
             top_intersect_point = CollisionUtility.calculateIntersectPoint(lander_top_line[0], lander_top_line[1], surface_points[i], surface_points[i+1])
             bottom_intersect_point = CollisionUtility.calculateIntersectPoint(lander_bottom_line[0], lander_bottom_line[1], surface_points[i], surface_points[i+1])
-            if (bottom_intersect_point != None or top_intersect_point != None):
+            left_intersect_point = CollisionUtility.calculateIntersectPoint(lander_left_line[0], lander_left_line[1], surface_points[i], surface_points[i+1])
+            right_intersect_point = CollisionUtility.calculateIntersectPoint(lander_right_line[0], lander_right_line[1], surface_points[i], surface_points[i+1])
+            print(top_intersect_point, " -- ", bottom_intersect_point, " -- ", left_intersect_point, " -- ", right_intersect_point)
+            if (bottom_intersect_point != None or top_intersect_point != None or left_intersect_point != None or right_intersect_point != None):
+                print("inside if intersect points")
                 intersection_point_found = True
 
         if (not intersection_point_found):
@@ -160,7 +166,6 @@ class CollisionUtility:
     def surface_points_below_lander(lander, surface):
         lander_leftmost_point = lander.rect.bottomleft[0]
         lander_rightmost_point = lander.rect.bottomright[0]
-        # print(lander_leftmost_point, " -- ", lander_rightmost_point)
         points_below_lander = []
         leftmost_point_found = False
         rightmost_point_found = False 
@@ -180,3 +185,21 @@ class CollisionUtility:
                     rightmost_point_found = True
         
         return points_below_lander
+
+    @staticmethod
+    def check_gameobject_window_collision(gameobject, screen_dimensions):
+        gameobject_leftmost_point = gameobject.rect.topleft[0]
+        gameobject_rightmost_point = gameobject.rect.topright[0]
+        gameobject_bottommost_point = gameobject.rect.bottomleft[1]
+        # Check left side of the window
+        if (gameobject_rightmost_point < 0):
+            return True
+        # Check right side of the window
+        elif (gameobject_leftmost_point > screen_dimensions[0]):
+            return True
+        # Check top side of the window 
+        # there is no need to check bottom side since there will be collision with surface
+        elif (gameobject_bottommost_point < 0):
+            return True
+        else:
+            return False

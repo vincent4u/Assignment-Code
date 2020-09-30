@@ -9,7 +9,7 @@ class Lander(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(filepath)
         self.original_image = self.image
-        self.image = pygame.transform.scale(self.image, (1, 1))
+        # self.image = pygame.transform.scale(self.image, (1, 1))
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
         self.velocity = velocity
@@ -29,7 +29,9 @@ class Lander(pygame.sprite.Sprite):
             print("POSSIBLE COLLISION")
             collided = CollisionUtility.check_lander_collision_with_surface(self, surface)
             return collided
-
+    
+    def window_collision(self, screen_dimensions):
+        return CollisionUtility.check_gameobject_window_collision(self, screen_dimensions)
 
     def update_lander(self, delta_time):
         # update the changes in velocity

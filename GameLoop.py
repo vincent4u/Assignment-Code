@@ -110,7 +110,7 @@ class GameLoop:
                 if (self.lander.landing_pad_collision(self.surface)):
                     on_menus[1] = True
                 # check if lander collided with surface
-                elif (self.lander.surface_collision(self.surface)):
+                elif (self.lander.surface_collision(self.surface) or self.lander.window_collision((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))):
                     on_menus[2] = True
                 
                 if (on_menus[1] or on_menus[2]):
