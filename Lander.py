@@ -50,6 +50,11 @@ class Lander(pygame.sprite.Sprite):
             theta = -20 * delta_time
 
         self.current_angle = self.current_angle + theta
+        if (self.current_angle < 0):
+            self.current_angle = self.current_angle + 360
+        
+        if (self.current_angle >= 360):
+            self.current_angle = self.current_angle%360
 
         movement = movement.rotate(-self.current_angle)
 

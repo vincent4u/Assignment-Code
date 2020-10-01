@@ -15,7 +15,7 @@ class DataCollection:
         current_angle = lander.current_angle
         x_target = surface.centre_landing_pad[0] - lander.position.x
         y_target = surface.centre_landing_pad[1] - lander.position.y
-        dist_to_surface = surface.rect.topleft[1] - lander.position.y
+        dist_to_surface = surface.polygon_rect.topleft[1] - lander.position.y
 
         # outputs
         thrust = 0

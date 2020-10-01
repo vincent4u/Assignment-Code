@@ -100,6 +100,10 @@ class GameLoop:
                             on_menus[2] = False
             else:
                 self.Handler.handle(pygame.event.get())
+                print("lander: ", self.lander.position.x, " -- ", self.lander.position.y)
+                print("surface: ", self.surface.rect.topleft[1], " -- ", self.surface.rect.topleft[0])
+                print("surface landing pad: ", self.surface.centre_landing_pad[0], " -- ", self.surface.centre_landing_pad[1])
+                print("surface polygon: ", self.surface.polygon_rect.topleft[0], " -- ", self.surface.polygon_rect.topleft[1])
                 # check if data collection mode is activated
                 if (game_modes[1]):
                     data_collector.save_current_status(self.lander, self.surface, self.controller)
