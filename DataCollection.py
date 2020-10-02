@@ -12,6 +12,8 @@ class DataCollection:
         # inputs
         current_velocity = lander.velocity
         current_speed = current_velocity.length()
+        if (lander.is_going_down):
+            current_speed = (-1)*current_speed
         current_angle = lander.current_angle
         x_target = surface.centre_landing_pad[0] - lander.position.x
         y_target = surface.centre_landing_pad[1] - lander.position.y
@@ -35,7 +37,7 @@ class DataCollection:
                     str(dist_to_surface) + "," + \
                     str(thrust) + "," + \
                     str(turning) + "\n"
-        print(status_row)
+        # print(status_row)
         
         # save comma separated row in the file
         self.data_file.write(status_row)

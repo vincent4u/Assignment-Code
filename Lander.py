@@ -17,6 +17,7 @@ class Lander(pygame.sprite.Sprite):
         self.controller = controller
         self.gravity = Vector(0, 0.5)
         self.current_angle = 0
+        self.is_going_down = True
 
     def rotate(self, angle):
         self.image = pygame.transform.rotate(self.original_image, angle)
@@ -82,8 +83,13 @@ class Lander(pygame.sprite.Sprite):
         print("================ \n")
         """
 
+        last_position = self.position # save last position to compute y movement
         # update the changes in position
         self.position = self.position.add(self.velocity)
+        if (self.position.y - last_position.y > 0):
+            self.is_going_down = True
+        else:
+            self.is_going_down = False
         location = [self.position.x, self.position.y]
         self.rect.left, self.rect.top = location
         self.rotate(self.current_angle)
