@@ -8,8 +8,6 @@ from Surface import Surface
 from MainMenu import MainMenu
 from ResultMenu import ResultMenu
 from DataCollection import DataCollection
-import tensorflow as tf 
-from tensorflow import keras 
 
 
 class GameLoop:
