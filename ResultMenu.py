@@ -23,7 +23,7 @@ class ResultMenu:
             [text_buttons[2], rect_buttons[2], self.colors[0]],
         ]
 
-    def draw_result_objects(self, screen, result):
+    def draw_result_objects(self, screen, result, score):
         screen.fill(self.colors[2])
         if (result):
             pygame.draw.rect(screen, self.buttons[0][2], self.buttons[0][1])
@@ -48,5 +48,4 @@ class ResultMenu:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # 1 == left mouse button, 2 == middle button, 3 == right button
             if event.button == 1:
-                print("button clicked", " -- ", self.buttons[2][1].collidepoint(event.pos))
                 return self.buttons[2][1].collidepoint(event.pos)
