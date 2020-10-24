@@ -8,6 +8,9 @@ from Surface import Surface
 from MainMenu import MainMenu
 from ResultMenu import ResultMenu
 from DataCollection import DataCollection
+import tensorflow as tf 
+from tensorflow import keras 
+
 
 class GameLoop:
 
@@ -116,6 +119,9 @@ class GameLoop:
             else:
                 self.Handler.handle(pygame.event.get())
                 # check if data collection mode is activated
+                if (game_modes[2]):
+                    print("nn mode")
+
                 if (game_modes[1]):
                     data_collector.save_current_status(self.lander, self.surface, self.controller)
                 self.screen.blit(background_image,(0,0))

@@ -1,13 +1,13 @@
 
 class DataCollection:
 
-    def __init__(self):
+    def __int__(self):
         self.data_file = open("ce889_dataCollection.csv", "a")
         self.data_file.close()
-        self.buffer = []
 
     def save_current_status(self, lander, surface, controller):
         # open file
+        self.data_file = open("ce889_dataCollection.csv", "a")
         
         # inputs
         current_velocity = lander.velocity
@@ -39,12 +39,8 @@ class DataCollection:
                     str(dist_to_surface) + "," + \
                     str(thrust) + "," + \
                     str(turning) + "\n"
-
-        self.buffer.append(status_row)
+        # print(status_row)
+        
         # save comma separated row in the file
-
-    def write_to_file(self):
-        self.data_file = open("ce889_dataCollection.csv", "a")
-        for row in self.buffer:
-            self.data_file.write(row)
+        self.data_file.write(status_row)
         self.data_file.close()
