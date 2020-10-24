@@ -126,6 +126,8 @@ class GameLoop:
                 if (self.lander.landing_pad_collision(self.surface)):
                     score = self.score_calculation()
                     on_menus[1] = True
+                    if(game_modes[1]):
+                        data_collector.write_to_file()
                 # check if lander collided with surface
                 elif (self.lander.surface_collision(self.surface) or self.lander.window_collision((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))):
                     on_menus[2] = True
