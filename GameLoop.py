@@ -8,9 +8,7 @@ from Surface import Surface
 from MainMenu import MainMenu
 from ResultMenu import ResultMenu
 from DataCollection import DataCollection
-import tensorflow as tf 
-from tensorflow import keras 
-
+from NeuralNetHolder import NeuralNetHolder
 
 class GameLoop:
 
@@ -21,6 +19,7 @@ class GameLoop:
         self.game_logic = GameLogic()
         self.fps_clock = pygame.time.Clock()
         self.fps = 60
+        self.neuralnet = NeuralNetHolder()
 
     def init(self, config_data):
         # used to initialise the pygame library
@@ -120,13 +119,26 @@ class GameLoop:
                 self.Handler.handle(pygame.event.get())
                 # check if data collection mode is activated
                 if (game_modes[2]):
-                    print("nn mode")
+                    input_row = data_collector.get_input_row(self.lander, self.surface, self.controller)
+                    nn_prediction = self.neuralnet.predict(input_row)
+                    # print(nn_prediction)
+                    self.controller.set_mouse(False)
+                    self.controller.set_up(False)
+                    self.controller.set_left(False)
+                    self.controller.set_right(False)
+                    if (nn_prediction[0] == 1):
+                        self.controller.set_up(True)
+                    if (nn_prediction[1] == 1):
+                        self.controller.set_left(True)
+                    elif (nn_prediction[2] == 1):
+                        self.controller.set_right(True)
 
                 if (game_modes[1]):
                     data_collector.save_current_status(self.lander, self.surface, self.controller)
                 self.screen.blit(background_image,(0,0))
-                self.update_objects()
-                # then update the visuals on screen from the list
+                if (self.Handler.first_key_press):
+                    self.update_objects()
+                    # then update the visuals on screen from the list
                 sprites.draw(self.screen)
                 # the win state and the score calculation
                 if (self.lander.landing_pad_collision(self.surface)):

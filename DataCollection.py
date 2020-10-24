@@ -33,7 +33,7 @@ class DataCollection:
                     str(current_angle) + "," + \
                     str(x_target) + "," + \
                     str(y_target) + "," + \
-                    str(dist_to_surface) + ","
+                    str(dist_to_surface)
 
         return input_row
 
@@ -44,14 +44,9 @@ class DataCollection:
         input_row = self.get_input_row(lander, surface, controller)
 
         # add output values to the string input row
-        status_row = input_row + \
+        status_row = input_row + "," + \
                     str(thrust) + "," + \
-<<<<<<< HEAD
                     str(turning[0]) + "," + str(turning[1]) + "\n"
-=======
-                    str(turning) + "\n"
-        # print(status_row)
->>>>>>> 1193d31f0e96d7f0535eb01ace493959c31c0be4
         
         # save comma separated row in the file
         self.data_file.write(status_row)
