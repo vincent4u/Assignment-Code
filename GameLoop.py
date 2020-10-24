@@ -20,6 +20,7 @@ class GameLoop:
         self.fps_clock = pygame.time.Clock()
         self.fps = 60
         self.neuralnet = NeuralNetHolder()
+        self.version = "v1.0"
 
     def init(self, config_data):
         # used to initialise the pygame library
@@ -78,6 +79,7 @@ class GameLoop:
         score = 0
         # Initialize
         while True:
+            # menus
             # check if Quit button was clicked
             if (game_modes[len(game_modes)-1]):
                 pygame.quit()
@@ -96,6 +98,9 @@ class GameLoop:
                     result_menu.draw_result_objects(self.screen, on_menus[1], score)
                 else:
                     main_menu.draw_buttons(self.screen)
+                    # draw the version number
+                    textsurface = myfont.render(self.version, False, (0, 0, 0))
+                    self.screen.blit(textsurface, (0, 0))
 
                 # main_menu.draw_buttons(self.screen)
                 for event in pygame.event.get():
@@ -116,6 +121,7 @@ class GameLoop:
                             on_menus[1] = False
                             on_menus[2] = False
             else:
+                # game
                 self.Handler.handle(pygame.event.get())
                 # check if data collection mode is activated
                 if (game_modes[2]):
@@ -157,10 +163,6 @@ class GameLoop:
 
 
             # surface_sprites.draw(self.screen)
-            Fps_count = str(self.fps_clock)
-            FpsText = "FPS: " + Fps_count
-            textsurface = myfont.render(FpsText, False, (255, 255, 255))
-            self.screen.blit(textsurface, (0, 0))
             pygame.display.flip()
             self.fps_clock.tick(self.fps)
 
