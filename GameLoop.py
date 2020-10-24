@@ -91,7 +91,6 @@ class GameLoop:
                 self.Handler = EventHandler(self.controller)
                 sprites = pygame.sprite.Group()
                 self.game_start(config_data, sprites)
-                game_start = False
 
             if on_menus[0] or on_menus[1] or on_menus[2]:
                 if on_menus[1] or on_menus[2]:
@@ -142,6 +141,10 @@ class GameLoop:
                 if (game_modes[1]):
                     data_collector.save_current_status(self.lander, self.surface, self.controller)
                 self.screen.blit(background_image,(0,0))
+                if(not self.Handler.first_key_press and game_start == True ):
+                    self.update_objects()
+                    game_start = False
+
                 if (self.Handler.first_key_press):
                     self.update_objects()
                     # then update the visuals on screen from the list
@@ -152,9 +155,11 @@ class GameLoop:
                     on_menus[1] = True
                     if(game_modes[1]):
                         data_collector.write_to_file()
+                        data_collector.reset()
                 # check if lander collided with surface
                 elif (self.lander.surface_collision(self.surface) or self.lander.window_collision((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))):
                     on_menus[2] = True
+                    data_collector.reset()
                 
                 if (on_menus[1] or on_menus[2]):
                     game_start = False

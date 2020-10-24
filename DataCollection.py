@@ -52,5 +52,7 @@ class DataCollection:
         self.data_file = open("ce889_dataCollection.csv", "a")
         for row in self.buffer:
             self.data_file.write(row)
-
         self.data_file.close()
+
+    def reset(self):
+        self.buffer = []
