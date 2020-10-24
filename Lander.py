@@ -9,9 +9,11 @@ class Lander(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(filepath)
         self.original_image = self.image
-        # self.image = pygame.transform.scale(self.image, (1, 1))
         self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        image_left = location[0] + 16
+        image_top = location[1] + 28
+        self.rect.left = image_left
+        self.rect.top = image_top
         self.velocity = velocity
         self.position = Vector(location[0], location[1])
         self.controller = controller
@@ -55,7 +57,7 @@ class Lander(pygame.sprite.Sprite):
             self.current_angle = self.current_angle + 360
         
         if (self.current_angle >= 360):
-            self.current_angle = self.current_angle%360
+            self.current_angle = self.current_angle % 360
 
         movement = movement.rotate(-self.current_angle)
 
