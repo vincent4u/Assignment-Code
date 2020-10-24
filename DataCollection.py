@@ -12,8 +12,8 @@ class DataCollection:
         # inputs
         current_velocity = lander.velocity
         current_speed = current_velocity.length()
-        if (lander.is_going_down):
-            current_speed = (-1)*current_speed
+        # if (lander.is_going_down):
+        #     current_speed = (-1)*current_speed
         current_angle = lander.current_angle
         x_target = surface.centre_landing_pad[0] - lander.position.x
         y_target = surface.centre_landing_pad[1] - lander.position.y
@@ -31,6 +31,8 @@ class DataCollection:
 
         # create comma separated string row
         status_row = str(current_speed)+"," + \
+                    str(current_velocity.x) + "," + \
+                    str(current_velocity.y) + "," + \
                     str(current_angle) + "," + \
                     str(x_target) + "," + \
                     str(y_target) + "," + \

@@ -73,6 +73,9 @@ class GameLoop:
                 sprites = pygame.sprite.Group()
                 self.game_start(config_data, sprites)
                 game_start = False
+                self.screen.blit(background_image,(0,0)) 
+                self.update_objects()
+                sprites.draw(self.screen)
 
             if on_menus[0] or on_menus[1] or on_menus[2]:
                 if on_menus[1] or on_menus[2]:
@@ -105,17 +108,18 @@ class GameLoop:
                 # print("surface landing pad: ", self.surface.centre_landing_pad[0], " -- ", self.surface.centre_landing_pad[1])
                 # print("surface polygon: ", self.surface.polygon_rect.topleft[0], " -- ", self.surface.polygon_rect.topleft[1])
                 # check if data collection mode is activated
-                if (game_modes[1]):
+                if (game_modes[1] and self.Handler.first_key_press):
                     data_collector.save_current_status(self.lander, self.surface, self.controller)
-                self.screen.blit(background_image,(0,0))
-                self.update_objects()
-                # then update the visuals on screen from the list
-                sprites.draw(self.screen)
-                if (self.lander.landing_pad_collision(self.surface)):
-                    on_menus[1] = True
-                # check if lander collided with surface
-                elif (self.lander.surface_collision(self.surface) or self.lander.window_collision((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))):
-                    on_menus[2] = True
+                if (self.Handler.first_key_press):
+                    self.screen.blit(background_image,(0,0))
+                    self.update_objects()
+                    # then update the visuals on screen from the list
+                    sprites.draw(self.screen)
+                    if (self.lander.landing_pad_collision(self.surface)):
+                        on_menus[1] = True
+                    # check if lander collided with surface
+                    elif (self.lander.surface_collision(self.surface) or self.lander.window_collision((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))):
+                        on_menus[2] = True
                 
                 if (on_menus[1] or on_menus[2]):
                     game_start = False

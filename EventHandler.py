@@ -6,6 +6,7 @@ class EventHandler:
 
     def __init__(self, controller):
         self.controller = controller
+        self.first_key_press = False
 
     def handle(self, event_list):
         for event in event_list:
@@ -13,6 +14,7 @@ class EventHandler:
                 quit()
             if event.type == KEYDOWN:
                 self.keyboard_controller_down(event)
+                self.first_key_press = True
             if event.type == KEYUP:
                 self.keyboard_controller_up(event)
             if event.type == MOUSEBUTTONDOWN:
