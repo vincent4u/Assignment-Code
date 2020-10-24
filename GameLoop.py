@@ -73,7 +73,8 @@ class GameLoop:
         data_collector = DataCollection()
         main_menu = MainMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         result_menu = ResultMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
-        # Initialize 
+        score = 0
+        # Initialize
         while True:
             # check if Quit button was clicked
             if (game_modes[len(game_modes)-1]):
@@ -90,7 +91,7 @@ class GameLoop:
 
             if on_menus[0] or on_menus[1] or on_menus[2]:
                 if on_menus[1] or on_menus[2]:
-                    result_menu.draw_result_objects(self.screen, on_menus[1])
+                    result_menu.draw_result_objects(self.screen, on_menus[1], score)
                 else:
                     main_menu.draw_buttons(self.screen)
 
@@ -108,7 +109,7 @@ class GameLoop:
                     elif on_menus[1] or on_menus[2]:
                         result_menu.check_hover(event)
                         on_menus[0] = result_menu.check_back_main_menu(event)
-                        result_menu.draw_result_objects(self.screen, on_menus[1])
+                        result_menu.draw_result_objects(self.screen, on_menus[1], score)
                         if on_menus[0]:
                             on_menus[1] = False
                             on_menus[2] = False
