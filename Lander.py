@@ -29,7 +29,6 @@ class Lander(pygame.sprite.Sprite):
             
     def surface_collision(self, surface):
         if (self.rect.colliderect(surface.polygon_rect)):
-            print("POSSIBLE COLLISION")
             collided = CollisionUtility.check_lander_collision_with_surface(self, surface)
             return collided
     
@@ -75,15 +74,6 @@ class Lander(pygame.sprite.Sprite):
         speed = self.velocity.length()
         if speed > 8:
             self.velocity = last_velocity
-        """
-        print("Velocity: ")
-        self.velocity.print()
-        print("Position: ")
-        self.position.print()
-        print("Current Angle: ")
-        print(self.current_angle)
-        print("================ \n")
-        """
 
         last_position = self.position # save last position to compute y movement
         # update the changes in position

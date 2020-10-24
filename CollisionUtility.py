@@ -15,15 +15,13 @@ class CollisionUtility:
         surface_points = CollisionUtility.surface_points_below_lander(lander, surface)
 
         intersection_point_found = False
-        # print("surface points: ", surface_points)
+
         for i in range(len(surface_points)-1):
             top_intersect_point = CollisionUtility.calculateIntersectPoint(lander_top_line[0], lander_top_line[1], surface_points[i], surface_points[i+1])
             bottom_intersect_point = CollisionUtility.calculateIntersectPoint(lander_bottom_line[0], lander_bottom_line[1], surface_points[i], surface_points[i+1])
             left_intersect_point = CollisionUtility.calculateIntersectPoint(lander_left_line[0], lander_left_line[1], surface_points[i], surface_points[i+1])
             right_intersect_point = CollisionUtility.calculateIntersectPoint(lander_right_line[0], lander_right_line[1], surface_points[i], surface_points[i+1])
-            # print(top_intersect_point, " -- ", bottom_intersect_point, " -- ", left_intersect_point, " -- ", right_intersect_point)
             if (bottom_intersect_point != None or top_intersect_point != None or left_intersect_point != None or right_intersect_point != None):
-                # print("inside if intersect points")
                 intersection_point_found = True
 
         if (not intersection_point_found):
@@ -153,7 +151,7 @@ class CollisionUtility:
                         return point
                 except:
                     # sometimes the value in a point are too large for PyGame's Rect class
-                    str = "point was invalid  ", point                
+                    str = "point was invalid  ", point
                     print(str)
                     
             # This is the case where the infinately long lines crossed but 

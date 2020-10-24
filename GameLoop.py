@@ -39,13 +39,17 @@ class GameLoop:
         pygame.display.set_icon(pygame.image.load(config_data['LANDER_IMG_PATH']))
 
     def score_calculation(self):
-
         score = 1000.0 - (self.surface.centre_landing_pad[0] - self.lander.position.x)
         angle = self.lander.current_angle
         if(self.lander.current_angle == 0):
             angle = 1
+        if(self.lander.current_angle > 180):
+            angle = abs(self.lander.current_angle - 360)
         score = score / angle
+        velocity = 500 - (self.lander.velocity.x + self.lander.velocity.y)
+        score = score + velocity
 
+        print("lander difference " + str(self.surface.centre_landing_pad[0] - self.lander.position.x))
         print("SCORE " + str(score))
 
         return score
@@ -59,7 +63,7 @@ class GameLoop:
         sprites = pygame.sprite.Group()
 
         # booleans for what the game state is
-        on_menus = [True, False, False] #Main, Won, Lost
+        on_menus = [True, False, False] # Main, Won, Lost
         game_start = False
 
         # Game modes: Play Game, Data Collection, Neural Net, Quit
@@ -72,7 +76,8 @@ class GameLoop:
         data_collector = DataCollection()
         main_menu = MainMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         result_menu = ResultMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
-        # Initialize 
+        score = 0
+        # Initialize
         while True:
             # check if Quit button was clicked
             if (game_modes[len(game_modes)-1]):
@@ -89,7 +94,7 @@ class GameLoop:
 
             if on_menus[0] or on_menus[1] or on_menus[2]:
                 if on_menus[1] or on_menus[2]:
-                    result_menu.draw_result_objects(self.screen, on_menus[1])
+                    result_menu.draw_result_objects(self.screen, on_menus[1], score)
                 else:
                     main_menu.draw_buttons(self.screen)
 
@@ -107,16 +112,12 @@ class GameLoop:
                     elif on_menus[1] or on_menus[2]:
                         result_menu.check_hover(event)
                         on_menus[0] = result_menu.check_back_main_menu(event)
-                        result_menu.draw_result_objects(self.screen, on_menus[1])
+                        result_menu.draw_result_objects(self.screen, on_menus[1], score)
                         if on_menus[0]:
                             on_menus[1] = False
                             on_menus[2] = False
             else:
                 self.Handler.handle(pygame.event.get())
-                # print("lander: ", self.lander.position.x, " -- ", self.lander.position.y)
-                # print("surface: ", self.surface.rect.topleft[1], " -- ", self.surface.rect.topleft[0])
-                # print("surface landing pad: ", self.surface.centre_landing_pad[0], " -- ", self.surface.centre_landing_pad[1])
-                # print("surface polygon: ", self.surface.polygon_rect.topleft[0], " -- ", self.surface.polygon_rect.topleft[1])
                 # check if data collection mode is activated
                 if (game_modes[2]):
                     print("nn mode")
@@ -129,8 +130,7 @@ class GameLoop:
                 sprites.draw(self.screen)
                 # the win state and the score calculation
                 if (self.lander.landing_pad_collision(self.surface)):
-                    self.score_calculation()
-
+                    score = self.score_calculation()
                     on_menus[1] = True
                 # check if lander collided with surface
                 elif (self.lander.surface_collision(self.surface) or self.lander.window_collision((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))):
