@@ -21,13 +21,13 @@ class DataCollection:
 
         # outputs
         thrust = 0
-        turning = 0
+        turning = [0,0]
         if (controller.is_up()):
             thrust = 1
         if (controller.is_left()):
-            turning = -1
+            turning = [1,0]
         elif (controller.is_right()):
-            turning = 1
+            turning = [0,1]
 
         # create comma separated string row
         status_row = str(current_speed)+"," + \
@@ -38,7 +38,7 @@ class DataCollection:
                     str(y_target) + "," + \
                     str(dist_to_surface) + "," + \
                     str(thrust) + "," + \
-                    str(turning) + "\n"
+                    str(turning[0]) + "," + str(turning[1]) + "\n"
         # print(status_row)
         
         # save comma separated row in the file
