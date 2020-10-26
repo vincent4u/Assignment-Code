@@ -127,10 +127,10 @@ class GameLoop:
                     input_row = data_collector.get_input_row(self.lander, self.surface, self.controller)
                     nn_prediction = self.neuralnet.predict(input_row)
                     # print(nn_prediction)
-                    self.controller.set_mouse(False)
-                    self.controller.set_up(False)
-                    self.controller.set_left(False)
-                    self.controller.set_right(False)
+                    # self.controller.set_mouse(False)
+                    # self.controller.set_up(False)
+                    # self.controller.set_left(False)
+                    # self.controller.set_right(False)
                     if (nn_prediction[0] == 1):
                         self.controller.set_up(True)
                     if (nn_prediction[1] == 1):
@@ -138,15 +138,18 @@ class GameLoop:
                     elif (nn_prediction[2] == 1):
                         self.controller.set_right(True)
 
-                if (game_modes[1]):
-                    data_collector.save_current_status(self.lander, self.surface, self.controller)
+                # if (game_modes[1]):
+                #     data_collector.save_current_status(self.lander, self.surface, self.controller)
                 self.screen.blit(background_image,(0,0))
                 if(not self.Handler.first_key_press and game_start == True ):
                     self.update_objects()
                     game_start = False
 
                 if (self.Handler.first_key_press):
+                    data_input_row = data_collector.get_input_row(self.lander, self.surface, self.controller)
                     self.update_objects()
+                    if (game_modes[1]):
+                        data_collector.save_current_status(data_input_row, self.lander, self.surface, self.controller)
                     # then update the visuals on screen from the list
                 sprites.draw(self.screen)
                 # the win state and the score calculation

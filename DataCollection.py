@@ -26,22 +26,27 @@ class DataCollection:
 
         return input_row
 
-    def save_current_status(self, lander, surface, controller):
+    def save_current_status(self, input_row, lander, surface, controller):
         # open file
-        input_row = self.get_input_row(lander, surface, controller)
+        # input_row = self.get_input_row(lander, surface, controller)
 
         # outputs
         thrust = 0
-        turning = [0, 0]
         if (controller.is_up()):
             thrust = 1
+        new_vel_y = lander.velocity.y
+        
+        turning = [0, 0]
         if (controller.is_left()):
             turning = [1,0]
         elif (controller.is_right()):
             turning = [0,1]
+        new_angle = lander.current_angle
         # add output values to the string input row
         status_row = input_row + "," + \
                     str(thrust) + "," + \
+                    str(new_vel_y) + "," + \
+                    str(new_angle) + "," + \
                     str(turning[0]) + "," + str(turning[1]) + "\n"
         
         # save comma separated row in the file
