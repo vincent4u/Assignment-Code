@@ -13,6 +13,7 @@ class EventHandler:
             if event.type == QUIT:
                 quit()
             if event.type == KEYDOWN:
+                print(event.key)
                 self.keyboard_controller_down(event)
                 self.first_key_press = True
             if event.type == KEYUP:
@@ -23,11 +24,11 @@ class EventHandler:
                 self.mouse_up()
 
     def keyboard_controller_down(self, event):
-        if event.key == 273:
+        if event.key == 273 or event.key == 1073741906:
             self.controller.set_up(True)
-        elif event.key == 276:
+        elif event.key == 276 or event.key == 1073741904:
             self.controller.set_left(True)
-        elif event.key == 275:
+        elif event.key == 275 or event.key == 1073741903:
             self.controller.set_right(True)
         elif event.key == 113 or event.key == 27:
             self.quit()
