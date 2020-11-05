@@ -20,7 +20,7 @@ class GameLoop:
         self.fps_clock = pygame.time.Clock()
         self.fps = 60
         self.neuralnet = NeuralNetHolder()
-        self.version = "v1.0"
+        self.version = "v1.01"
 
     def init(self, config_data):
         # used to initialise the pygame library

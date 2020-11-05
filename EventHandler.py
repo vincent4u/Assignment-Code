@@ -1,7 +1,6 @@
 import pygame, sys
 from pygame.locals import *
 
-
 class EventHandler:
 
     def __init__(self, controller):
@@ -13,7 +12,6 @@ class EventHandler:
             if event.type == QUIT:
                 quit()
             if event.type == KEYDOWN:
-                print(event.key)
                 self.keyboard_controller_down(event)
                 self.first_key_press = True
             if event.type == KEYUP:
@@ -34,11 +32,11 @@ class EventHandler:
             self.quit()
 
     def keyboard_controller_up(self, event):
-        if event.key == 273:
+        if event.key == 273 or event.key == 1073741906:
             self.controller.set_up(False)
-        if event.key == 276:
+        if event.key == 276 or event.key == 1073741904:
             self.controller.set_left(False)
-        if event.key == 275:
+        if event.key == 275 or event.key == 1073741903:
             self.controller.set_right(False)
 
     def quit(self):
