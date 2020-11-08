@@ -6,5 +6,5 @@ class NeuralNetHolder:
 
     
     def predict(self, input_row):
-        # WRITE CODE TO PROCESS INPUT ROW AND PREDICT THRUST, LEFT_TURNING AND RIGHT_TURNING
+        # WRITE CODE TO PROCESS INPUT ROW AND PREDICT X_Velocity and Y_Velocity
         pass

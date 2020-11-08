@@ -73,7 +73,7 @@ class GameLoop:
         background_image = pygame.image.load(config_data['BACKGROUND_IMG_PATH']).convert_alpha()
         background_image = pygame.transform.scale(background_image, (config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
 
-        data_collector = DataCollection()
+        data_collector = DataCollection(config_data["ALL_DATA"])
         main_menu = MainMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         result_menu = ResultMenu((config_data['SCREEN_WIDTH'], config_data['SCREEN_HEIGHT']))
         score = 0
