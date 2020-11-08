@@ -35,6 +35,7 @@ class DataCollection:
         if (controller.is_up()):
             thrust = 1
         new_vel_y = lander.velocity.y
+        new_vel_x = lander.velocity.x
         
         turning = [0, 0]
         if (controller.is_left()):
@@ -46,6 +47,7 @@ class DataCollection:
         status_row = input_row + "," + \
                     str(thrust) + "," + \
                     str(new_vel_y) + "," + \
+                    str(new_vel_x) + "," + \
                     str(new_angle) + "," + \
                     str(turning[0]) + "," + str(turning[1]) + "\n"
         
