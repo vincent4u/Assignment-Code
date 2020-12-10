@@ -21,6 +21,7 @@ class GameLoop:
         self.fps = 60
         self.neuralnet = NeuralNetHolder()
         self.version = "v1.01"
+        self.prediction_cycle = 0
 
     def init(self, config_data):
         # used to initialise the pygame library
@@ -124,49 +125,39 @@ class GameLoop:
                 self.Handler.handle(pygame.event.get())
                 # check if data collection mode is activated
                 if (game_modes[2]):
-                    input_row = data_collector.get_input_row(self.lander, self.surface, self.controller)
-                    nn_prediction = self.neuralnet.predict(input_row)
-                    # print(nn_prediction)
-                    # self.controller.set_mouse(False)
-                    self.controller.set_up(False)
-                    self.controller.set_left(False)
-                    self.controller.set_right(False)
-                    # self.controller.set_up(nn_prediction[0] == 1)
-                    # self.lander.velocity.y = nn_prediction[0]
-                    # self.lander.velocity.x = nn_prediction[1]
-                    if (self.lander.velocity.y > nn_prediction[0]):
-                        self.controller.set_up(True)
-                    # self.lander.velocity.y = nn_prediction[0]
-                    if (self.lander.velocity.x < nn_prediction[1]):
-                        self.controller.set_right(True)
-                    else:
-                        self.controller.set_left(True)
-                    
-                    if (self.lander.current_angle > 30 and self.lander.current_angle < 330):
-                        ang_val = (self.lander.current_angle - 30)/(330-30)
-                        ang_val = round(ang_val)
-                        if (ang_val == 0):
-                            self.lander.current_angle = 30
-                        else:
-                            self.lander.current_angle = 330
-                    # print("lander vel: ", self.lander.velocity.y, " -- ", self.lander.velocity.x)
-                    # if (nn_prediction[1] == 1):
-                    #     self.controller.set_right(True)
-                    # elif (nn_prediction[1] == -1):
-                    #     self.controller.set_left(True)
+                    self.prediction_cycle += 1
+                    self.prediction_cycle = self.prediction_cycle%2
+                    #IF to add predictions every N frame, right now deactivated, every single frame we ask for prediction
+                    if (self.prediction_cycle >= 0): 
+                        input_row = data_collector.get_input_row(self.lander, self.surface, self.controller)
+                        # nn_prediction = [x_vel, y_vel]
+                        nn_prediction = self.neuralnet.predict(input_row)
+                        # reset controls
+                        self.controller.set_up(False)
+                        self.controller.set_left(False)
+                        self.controller.set_right(False)
 
-                    # self.lander.velocity.y = nn_prediction[0]
-                    # self.lander.velocity.x = nn_prediction[1]
-
-                    # self.lander.current_angle = int(nn_prediction[1])
-
-                    # if (nn_prediction[0] == 1):
-                    #     self.controller.set_up(True)
-                    # if (nn_prediction[1] == 1):
-                    #     self.controller.set_left(True)
-                    # elif (nn_prediction[2] == 1):
-                    #     self.controller.set_right(True)
-
+                        # check Vel_Y prediction, if lower means lander should go up
+                        if (self.lander.velocity.y > nn_prediction[1]):
+                            self.controller.set_up(True)
+                        
+                        # check Vel_X prediction, if prediction is higher than current go right, if lower go left
+                        if (self.lander.velocity.x < nn_prediction[0]):
+                            self.controller.set_right(True)
+                        elif(self.lander.velocity.x > nn_prediction[0]):
+                            self.controller.set_left(True)
+                        
+                        # avoid infinite turning, limit max angle
+                        print("current status controller: ", self.controller.up, " -- ", self.controller.left, " -- ", self.controller.right)
+                        print("current status lander: ", self.lander.velocity.y, " -- ", self.lander.velocity.x, " -- ", self.lander.velocity.y > nn_prediction[1], " -- ", self.lander.velocity.x < nn_prediction[0], " -- ", self.lander.velocity.y - nn_prediction[1])
+                        if (self.lander.current_angle > 30 and self.lander.current_angle < 330):
+                            ang_val = (self.lander.current_angle - 30)/(330-30)
+                            ang_val = round(ang_val)
+                            if (ang_val == 0):
+                                self.lander.current_angle = 30
+                            else:
+                                self.lander.current_angle = 330
+                
                 # if (game_modes[1]):
                 #     data_collector.save_current_status(self.lander, self.surface, self.controller)
                 self.screen.blit(background_image,(0,0))
